@@ -39,18 +39,21 @@ export default function Comingsoon() {
 						</h3>
 						<div>
 							<form onSubmit={Submit}>
-								<Row className="align-items-center">
+								<Row className="align-items-center" xs="1" sm="1" md="1">
 									<Col>
 										<Input
 											type="email"
 											name="email"
 											id="commingsoonmail"
 											placeholder="Enter email"
+											style={{ minWidth: "250px" }}
 										/>
 									</Col>
-									<Button color="primary" disabled={disable}>
-										Send me a mail
-									</Button>
+									<Col>
+										<Button color="primary" disabled={disable}>
+											Send me a mail
+										</Button>
+									</Col>
 								</Row>
 							</form>
 						</div>
