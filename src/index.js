@@ -13,18 +13,22 @@ import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
 import "assets/css/custom.css";
+import Store from "./store";
+import { Provider } from "react-redux";
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-	<Router history={hist}>
-		<Switch>
-			<Route path="/" component={Comingsoon} />
-			<Route path="/home" component={Home} />
-			<Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-			<Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
-			<Route path="*" exact={true} component={PageNotFound} />
-		</Switch>
-	</Router>,
-	document.getElementById("root")
+  <Provider store={Store}>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/" exact component={Comingsoon} />
+        <Route path="/home" component={Home} />
+        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+        <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
+        <Route path="*" exact={true} component={PageNotFound} />
+      </Switch>
+    </Router>
+  </Provider>,
+  document.getElementById("root")
 );
