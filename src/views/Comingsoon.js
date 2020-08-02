@@ -3,12 +3,16 @@ import { Row, Container, Col, Input, Button, Alert } from "reactstrap";
 
 export default function Comingsoon() {
 	const [visible, setVisible] = useState(false);
+	const [disable, setDisable] = useState(false);
+
 	const Submit = (e) => {
 		e.preventDefault();
 		setVisible(true);
+		setDisable(true);
 
 		setTimeout(() => {
 			setVisible(false);
+			setDisable(false);
 		}, 2000);
 	};
 	return (
@@ -19,14 +23,13 @@ export default function Comingsoon() {
 				toggle={setVisible}
 				className="position-fixed __alert pr-5"
 			>
-				<p className="pl-3">
-					thanks  for joining our wait list!
-				</p>
+				<p className="pl-3">thanks for joining our wait list!</p>
 			</Alert>
 
 			<Container>
 				<Row xs="1" sm="1" className="align-items-center __h-screen">
 					<Col md="7" xs="12">
+						<h4 className="text-white"> Coming Soon !!! </h4>
 						<h1 className="title text-white">
 							BEST INVESTMENTS PLAN FOR WORLDWIDE
 						</h1>
@@ -45,7 +48,9 @@ export default function Comingsoon() {
 											placeholder="Enter email"
 										/>
 									</Col>
-									<Button color="primary">Send me a mail</Button>
+									<Button color="primary" disabled={disable}>
+										Send me a mail
+									</Button>
 								</Row>
 							</form>
 						</div>
