@@ -7,23 +7,25 @@ import img3 from "../assets/img/HTB1_cmoaZTxK1Rjy0Fgq6yovpXa2-removebg-preview.p
 
 import { UncontrolledCarousel } from "reactstrap";
 
-const carouselItems = [
-  {
-    src: img1,
-    altText: "Slide 1",
-    caption: "",
-  },
-  {
-    src: img2,
-    altText: "Slide 2",
-    caption: "",
-  },
-  {
-    src: img3,
-    altText: "Slide 3",
-    caption: "",
-  },
-];
+// const carouselItems = [
+//   {
+//     src: img1,
+//     altText: "Slide 1",
+//     caption: "",
+//   },
+//   {
+//     src: img2,
+//     altText: "Slide 2",
+//     caption: "",
+//   },
+//   {
+//     src: img3,
+//     altText: "Slide 3",
+//     caption: "",
+//   },
+// ];
+
+// <UncontrolledCarousel items={carouselItems} />
 
 export default function Home() {
   return (
@@ -33,10 +35,10 @@ export default function Home() {
         <h2 className="mt-5"> Home </h2>
         <Row>
           <Col>
-            <h1 className="title"> Bitcoins </h1>
+            <img src={img1} />
           </Col>
           <Col>
-            <UncontrolledCarousel items={carouselItems} />
+            <h1 className="title"> Bitcoins </h1>
           </Col>
         </Row>
       </Container>
