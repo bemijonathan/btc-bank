@@ -1,0 +1,58 @@
+import React, { useState } from "react";
+import { Row, Container, Col, Input, Button, Alert } from "reactstrap";
+
+export default function Comingsoon() {
+	const [visible, setVisible] = useState(false);
+	const Submit = (e) => {
+		e.preventDefault();
+		setVisible(true);
+
+		setTimeout(() => {
+			setVisible(false);
+		}, 2000);
+	};
+	return (
+		<div className="__banner">
+			<Alert
+				color="primary"
+				isOpen={visible}
+				toggle={setVisible}
+				className="position-fixed __alert pr-5"
+			>
+				<p className="pl-3">
+					thanks  for joining our wait list!
+				</p>
+			</Alert>
+
+			<Container>
+				<Row xs="1" sm="1" className="align-items-center __h-screen">
+					<Col md="7" xs="12">
+						<h1 className="title text-white">
+							BEST INVESTMENTS PLAN FOR WORLDWIDE
+						</h1>
+						<h3 className="text-white">
+							We develop effective plans to move your customers behaviour.
+							customer can be alwayes his profit.
+						</h3>
+						<div>
+							<form onSubmit={Submit}>
+								<Row className="align-items-center">
+									<Col>
+										<Input
+											type="email"
+											name="email"
+											id="commingsoonmail"
+											placeholder="Enter email"
+										/>
+									</Col>
+									<Button color="primary">Send me a mail</Button>
+								</Row>
+							</form>
+						</div>
+					</Col>
+					<Col></Col>
+				</Row>
+			</Container>
+		</div>
+	);
+}

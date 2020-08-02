@@ -1,0 +1,18 @@
+.__banner {
+	background-image: url("../img/comingsoon.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+}
+.__h-screen {
+	min-height: 100vh;
+}
+
+.__banner h1 {
+	font-size: 50px;
+}
+
+.__alert {
+	right: 0;
+}
