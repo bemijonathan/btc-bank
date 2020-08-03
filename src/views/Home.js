@@ -2,10 +2,10 @@ import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
 import { Container, Col, Row } from "reactstrap";
 import img1 from "../assets/img/91CAVpbW3WL-removebg-preview.png";
-import img2 from "../assets/img/ezgif-2-6951d868bc12-removebg-preview.png";
-import img3 from "../assets/img/HTB1_cmoaZTxK1Rjy0Fgq6yovpXa2-removebg-preview.png";
-
-import { UncontrolledCarousel } from "reactstrap";
+// import img2 from "../assets/img/ezgif-2-6951d868bc12-removebg-preview.png";
+// import img3 from "../assets/img/HTB1_cmoaZTxK1Rjy0Fgq6yovpXa2-removebg-preview.png";
+//
+// import { UncontrolledCarousel } from "reactstrap";
 
 // const carouselItems = [
 //   {
