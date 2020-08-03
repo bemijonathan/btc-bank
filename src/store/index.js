@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from "redux";
 import { authReducer, authReducers } from "./reducers/authreducer";
 
-const rootReducer = combineReducers({ authReducer });
+const rootReducer = combineReducers({ authReducer, authReducers });
 
 export default createStore(
   rootReducer,
