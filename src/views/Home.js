@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
 import { Container, Col, Row, Button } from "reactstrap";
-import img1 from "../assets/img/banner.png";
+// import img1 from "../assets/img/banner.png";
 import img2 from "../assets/img/image2.png";
 // import img3 from "../assets/img/HTB1_cmoaZTxK1Rjy0Fgq6yovpXa2-removebg-preview.png";
 
