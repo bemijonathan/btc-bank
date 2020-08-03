@@ -35,7 +35,7 @@ export default function Home() {
         <h2 className="mt-5"> Home </h2>
         <Row>
           <Col>
-            <img src={img1} />
+            <img src={img1} alt="btc" />
           </Col>
           <Col>
             <h1 className="title"> Bitcoins </h1>
