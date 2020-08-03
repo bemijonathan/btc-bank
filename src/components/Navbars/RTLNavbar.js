@@ -68,10 +68,7 @@ class AdminNavbar extends React.Component {
   render() {
     return (
       <>
-        <Navbar
-          className={classNames("navbar-absolute", this.state.color)}
-          expand="lg"
-        >
+        <Navbar className={classNames("navbar", this.state.color)} expand="lg">
           <Container fluid>
             <div className="navbar-wrapper">
               <div
@@ -108,11 +105,17 @@ class AdminNavbar extends React.Component {
             <Collapse navbar isOpen={this.state.collapseOpen}>
               <Nav className="mr-auto" navbar>
                 <NavItem className="text-white  d-none d-lg-block d-xl-block">
-                  Home
+                  <NavLink> Home </NavLink>
                 </NavItem>
-                <NavItem className="text-white">About</NavItem>
-                <NavItem className="text-white">Contact</NavItem>
-                <NavItem className="text-white">Loans</NavItem>
+                <NavItem className="text-white">
+                  <NavLink> About</NavLink>
+                </NavItem>
+                <NavItem className="text-white">
+                  <NavLink> Contact </NavLink>
+                </NavItem>
+                <NavItem className="text-white">
+                  <NavLink>Loans</NavLink>
+                </NavItem>
 
                 <li className="separator d-lg-none" />
               </Nav>
@@ -120,8 +123,21 @@ class AdminNavbar extends React.Component {
               <Nav className="" navbar>
                 {true ? (
                   <>
-                    <Button> Log In</Button>
-                    <Button color="info"> Register </Button>
+                    <Button className="d-none d-lg-block d-xl-block">
+                      Log In
+                    </Button>
+                    <Button
+                      color="info"
+                      className="d-none d-lg-block d-xl-block"
+                    >
+                      Register
+                    </Button>
+                    <NavItem className="text-white d-lg-none d-xl-none ">
+                      <NavLink> Log In </NavLink>
+                    </NavItem>
+                    <NavItem className="text-white d-lg-none d-xl-none ">
+                      <NavLink>Register</NavLink>
+                    </NavItem>
                   </>
                 ) : (
                   <UncontrolledDropdown nav>
@@ -172,6 +188,16 @@ class AdminNavbar extends React.Component {
             </Collapse>
           </Container>
         </Navbar>
+        <div style={{ position: "relative" }}>
+          <coingecko-coin-price-marquee-widget
+            coin-ids="bitcoin,ethereum,eos,ripple,litecoin"
+            currency="usd"
+            background-color="#17a2b8"
+            locale="en"
+            font-color="#ffffff"
+            style={{ position: "relative" }}
+          ></coingecko-coin-price-marquee-widget>
+        </div>
       </>
     );
   }
