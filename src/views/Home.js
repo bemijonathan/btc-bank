@@ -1,9 +1,19 @@
 import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
-import { Container, Col, Row, Button } from "reactstrap";
-// import img1 from "../assets/img/banner.png";
+import {
+  Container,
+  Col,
+  Row,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  ListGroupItem,
+  ListGroup,
+} from "reactstrap";
+import WorldStats from "components/worldStats";
 import img2 from "../assets/img/image2.png";
-// import img3 from "../assets/img/HTB1_cmoaZTxK1Rjy0Fgq6yovpXa2-removebg-preview.png";
+import img4 from "../assets/img/vector-01.svg";
 
 export default function Home() {
   return (
@@ -21,8 +31,8 @@ export default function Home() {
             <img src={img2} alt="btc" />
           </Col>
           <Col>
-            <h1 className="title"> WE TRADE CRYPTO CURRENCIES. </h1>
-            <h3>
+            <h1 className="title text-white"> WE TRADE CRYPTO CURRENCIES. </h1>
+            <h3 className="text-white">
               We recieve result combining marketing, a creative and industry
               experience...
             </h3>
@@ -38,31 +48,19 @@ export default function Home() {
                     className="tim-icons icon-tap-02 text-primary title"
                     style={{ fontSize: "35px" }}
                   ></i>
-                  <span className="ml-2">Register Your Account</span>
+                  <span className="ml-2 ">Register Your Account</span>
                 </h4>
-                <hr className="line-primary" />
-                <p className="text-white">
-                  <b>BLK•</b>
-                  Design System is a "Developer First" product, with a lot of
-                  variables for colors, fonts, sizes and other elements.
-                </p>
               </div>
             </div>
             <div className="col-md-4">
               <div className="info  bg-info p-3">
                 <h4 className="info-title text-white">
                   <i
-                    className="tim-icons icon-chart-bar-32 text-white title"
-                    style={{ fontSize: "35px" }}
+                    className="tim-icons icon-chart-bar-32 text-danger title"
+                    style={{ fontSize: "30px" }}
                   ></i>
                   <span className="ml-2">Deposit Funds & Watch It Grow</span>
                 </h4>
-                <hr className="line-warning" />
-                <p className="text-white">
-                  We are following the latest code standards provided by the
-                  guys from Bootstrap, so you will love working with this design
-                  system.
-                </p>
               </div>
             </div>
             <div className="col-md-4">
@@ -74,15 +72,6 @@ export default function Home() {
                   ></i>
                   <span className="ml-2"> Withdraw Your Profits</span>
                 </h4>
-                <hr className="line-danger" />
-                <p className="text-white">
-                  Since all our products are built on top of Open Source also
-                  <b>BLK•</b>Design System is released under
-                  <a href="https://www.creative-tim.com/license?ref=license-page-mk-pro">
-                    MIT License
-                  </a>
-                  .
-                </p>
               </div>
             </div>
           </div>
@@ -99,7 +88,175 @@ export default function Home() {
             examine the volatility of bitcoin and other cryptocurrencies, invest
             and make good profit from our investments.
           </h4>
+
+          <section>
+            <div className="my-5 row">
+              <div className="col-md-3 ">
+                <div className="info bg-primary p-3">
+                  <h4 className="info-title text-white">SAFE AND SECURE</h4>
+                  <hr className="line-primary" />
+                  <p className="text-white">
+                    Our website and bots communicates with the server through a
+                    highly secured channel. The server as well runs the latest
+                    industry standard anti virus for maximum security
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="info  bg-info p-3">
+                  <h4 className="info-title text-white">MAXIMISED RETURNS</h4>
+                  <hr className="line-warning" />
+                  <p className="text-white">
+                    Our bots have been designed by professionals in the industry
+                    to give you valuable returns on your investment. You are
+                    assured of getting value for your money
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="info  bg-info p-3 ">
+                  <h4 className="info-title text-white">LOW RISK</h4>
+                  <hr className="line-danger" />
+                  <p className="text-white">
+                    Investments are leveraged into various networks, with the
+                    aid of professional alliance, risk of failure is brought to
+                    the barest minimum. You will invest with peace of mind
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-3">
+                <div className="info  bg-primary p-3">
+                  <h4 className="info-title text-white">WHATSAPP GROUP</h4>
+                  <hr className="line-danger" />
+                  <p className="text-white">
+                    Join our whatsapp Group for Effective and Easy communication
+                    on Trades
+                  </p>
+                  <Button> Join Now </Button>
+                </div>
+              </div>
+            </div>
+          </section>
         </section>
+
+        {/** world stats Us Div **/}
+        <section className="pt-5">
+          <h1 className="title text-center mt-5 text-white"> World Stats</h1>
+          <h6
+            className="text-center mx-auto text-white"
+            style={{ maxWidth: "700px" }}
+          >
+            trading platform is a group of financial and cryptocurrency experts
+            that invest in mining and cryptocurrency trading . We carefully
+            examine the volatility of bitcoin and other cryptocurrencies, invest
+            and make good profit from our investments.
+          </h6>
+          <WorldStats />
+        </section>
+
+        {/** Columns  **/}
+        <Row className="align-items-center">
+          {/**<Col md="4">Get Started Now</Col> **/}
+          <Col>
+            <img src={img4} alt="...." />
+          </Col>
+          <Col md="5">
+            <h1 className="title text-white"> Get Started Now </h1>
+            <Button className=" animation-on-hover" color="primary" size="lg">
+              CLick Here
+            </Button>
+          </Col>
+        </Row>
+
+        {/** select Plan **/}
+        <Container>
+          <Row>
+            <Col md="4" className="section-coins">
+              <hr className="line-info" />
+              <h1>
+                Choose the coin
+                <span className="text-info">that fits your needs</span>
+              </h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col md="4">
+              <Card className="card-coin card-plain">
+                <CardBody>
+                  <Row>
+                    <Col className="text-center" md="12">
+                      <h4 className="text-uppercase">Light Coin</h4>
+                      <span>Plan</span>
+                      <hr className="line-primary" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <ListGroup>
+                      <ListGroupItem>50 messages</ListGroupItem>
+                      <ListGroupItem>100 emails</ListGroupItem>
+                      <ListGroupItem>24/7 Support</ListGroupItem>
+                    </ListGroup>
+                  </Row>
+                </CardBody>
+                <CardFooter className="text-center">
+                  <Button className="btn-simple" color="primary">
+                    Get plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </Col>
+            <Col md="4">
+              <Card className="card-coin card-plain">
+                <CardBody>
+                  <Row>
+                    <Col className="text-center" md="12">
+                      <h4 className="text-uppercase">Dark Coin</h4>
+                      <span>Plan</span>
+                      <hr className="line-success" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <ListGroup>
+                      <ListGroupItem>150 messages</ListGroupItem>
+                      <ListGroupItem>1000 emails</ListGroupItem>
+                      <ListGroupItem>24/7 Support</ListGroupItem>
+                    </ListGroup>
+                  </Row>
+                </CardBody>
+                <CardFooter className="text-center">
+                  <Button className="btn-simple" color="success">
+                    Get plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </Col>
+            <Col md="4">
+              <Card className="card-coin card-plain">
+                <CardBody>
+                  <Row>
+                    <Col className="text-center" md="12">
+                      <h4 className="text-uppercase">Bright Coin</h4>
+                      <span>Plan</span>
+                      <hr className="line-info" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <ListGroup>
+                      <ListGroupItem>350 messages</ListGroupItem>
+                      <ListGroupItem>10K emails</ListGroupItem>
+                      <ListGroupItem>24/7 Support</ListGroupItem>
+                    </ListGroup>
+                  </Row>
+                </CardBody>
+                <CardFooter className="text-center">
+                  <Button className="btn-simple" color="info">
+                    Get plan
+                  </Button>
+                </CardFooter>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </Container>
     </>
   );
