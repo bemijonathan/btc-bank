@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -76,13 +77,13 @@ class AdminNavbar extends React.Component {
                   toggled: this.props.sidebarOpened,
                 })}
               >
-                <NavLink
+                <Link
                   className="navbar-toggler text-white"
-                  type="button"
                   onClick={this.props.toggleSidebar}
+                  to="/home"
                 >
                   Home
-                </NavLink>
+                </Link>
               </div>
               <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
                 {this.props.brandText}
@@ -123,19 +124,33 @@ class AdminNavbar extends React.Component {
               <Nav className="" navbar>
                 {true ? (
                   <>
-                    <Button className="d-none d-lg-block d-xl-block">
+                    <Button
+                      className="d-none d-lg-block d-xl-block"
+                      to="signin"
+                      tag={Link}
+                    >
                       Log In
                     </Button>
                     <Button
                       color="info"
-                      className="d-none d-lg-block d-xl-block"
+                      className="d-none d-lg-block d-xl-block bg-info"
+                      to="signup"
+                      tag={Link}
                     >
                       Register
                     </Button>
-                    <NavItem className="text-white d-lg-none d-xl-none ">
+                    <NavItem
+                      className="text-white d-lg-none d-xl-none "
+                      to="login"
+                      tag={Link}
+                    >
                       <NavLink> Log In </NavLink>
                     </NavItem>
-                    <NavItem className="text-white d-lg-none d-xl-none ">
+                    <NavItem
+                      className="text-white d-lg-none d-xl-none "
+                      to="signup"
+                      tag={Link}
+                    >
                       <NavLink>Register</NavLink>
                     </NavItem>
                   </>

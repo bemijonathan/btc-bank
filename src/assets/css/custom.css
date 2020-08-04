@@ -5,6 +5,11 @@
   background-repeat: no-repeat;
   min-height: 100vh;
 }
+
+.btn,
+.navbar .navbar-nav > a {
+  background: none;
+}
 .__h-screen {
   min-height: 100vh;
 }

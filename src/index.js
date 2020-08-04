@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
-
+import SignUp from "./views/Signup";
+import Signin from "./views/Signin";
 import AdminLayout from "layouts/Admin/Admin.js";
 import RTLLayout from "layouts/RTL/RTL.js";
 import Home from "./views/Home";
@@ -24,6 +25,8 @@ ReactDOM.render(
       <Switch>
         <Route path="/" exact component={Comingsoon} />
         <Route path="/home" component={Home} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={Signin} />
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
         <Route path="*" exact={true} component={PageNotFound} />
