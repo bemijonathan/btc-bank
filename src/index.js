@@ -20,18 +20,18 @@ import { Provider } from "react-redux";
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Provider store={Store}>
-    <Router history={hist}>
-      <Switch>
-        <Route path="/" exact component={Comingsoon} />
-        <Route path="/home" component={Home} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/signin" component={Signin} />
-        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-        <Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
-        <Route path="*" exact={true} component={PageNotFound} />
-      </Switch>
-    </Router>
-  </Provider>,
-  document.getElementById("root")
+	<Provider store={Store}>
+		<Router history={hist}>
+			<Switch>
+				<Route path="/" exact component={Comingsoon} />
+				<Route path="/home" component={Home} history={hist} />
+				<Route path="/signup" component={SignUp} />
+				<Route path="/signin" component={Signin} />
+				<Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+				<Route path="/rtl" render={(props) => <RTLLayout {...props} />} />
+				<Route path="*" exact={true} component={PageNotFound} />
+			</Switch>
+		</Router>
+	</Provider>,
+	document.getElementById("root")
 );
