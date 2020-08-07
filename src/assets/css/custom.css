@@ -1,92 +1,91 @@
 .__banner {
-	background-image: url("../img/comingsoon.jpg");
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-	min-height: 100vh;
+  background-image: url("../img/comingsoon.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
-
-/* .navbar .navbar-nav > a {
-	background: none;
-} */
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 .__h-screen {
-	min-height: 100vh;
+  min-height: 100vh;
 }
-
 .__banner h1 {
-	font-size: 50px;
+  font-size: 50px;
 }
-
 .__alert {
-	right: 0;
+  right: 0;
 }
 
 .navbar {
-	padding: 10px !important;
+  padding: 10px !important;
 }
 #root {
-	background: #182b5f;
+  background: #182b5f52;
 }
 .card.card-coin img {
-	width: 150px;
+  width: 150px;
 }
 
 .section-coins h1 {
-	margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .card.card-coin {
-	border: 2px solid #344675;
+  border: 2px solid #344675;
 }
 
 .card.card-plain {
-	background: transparent;
-	box-shadow: none;
+  background: transparent;
+  box-shadow: none;
 }
 
 .card.card-coin .card-header {
-	margin: -100px auto 20px;
+  margin: -100px auto 20px;
 }
 
 .card .card-header:not([data-background-color]) {
-	background-color: initial;
+  background-color: initial;
 }
 .card-plain .card-footer,
 .card-plain .card-header {
-	margin-left: 0;
-	margin-right: 0;
-	background-color: initial;
+  margin-left: 0;
+  margin-right: 0;
+  background-color: initial;
 }
 .card .card-header {
-	padding: 15px 15px 0;
-	border: 0;
-	color: hsla(0, 0%, 100%, 0.8);
+  padding: 15px 15px 0;
+  border: 0;
+  color: hsla(0, 0%, 100%, 0.8);
 }
 .card-header:first-child {
-	border-radius: 0.2232rem 0.2232rem 0 0;
+  border-radius: 0.2232rem 0.2232rem 0 0;
 }
 .card.card-coin .list-group .list-group-item {
-	background-color: initial;
-	border: none;
-	padding: 0.4rem 1rem;
+  background-color: initial;
+  border: none;
+  padding: 0.4rem 1rem;
 }
 
 .list-group-item:first-child {
-	border-top-left-radius: 0.25rem;
-	border-top-right-radius: 0.25rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
 .card.card-coin hr {
-	width: 20%;
-	margin-left: 40%;
+  width: 20%;
+  margin-left: 40%;
 }
 
 hr.line-info {
-	background-color: #1d8cf8;
+  background-color: #1d8cf8;
 }
 
 @media (max-width: 575.98px) {
-	.card.card-coin {
-		margin-top: 80px;
-	}
+  .card.card-coin {
+    margin-top: 80px;
+  }
 }
