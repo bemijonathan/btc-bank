@@ -1,5 +1,7 @@
 import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
+import { connect } from "react-redux";
+
 import {
 	Container,
 	Col,
@@ -14,8 +16,12 @@ import {
 import WorldStats from "components/worldStats";
 import img2 from "../assets/img/image2.png";
 import img4 from "../assets/img/vector-01.svg";
+import { Login, Logout } from "store/actions/auth";
 
-export default function Home() {
+function Home(props) {
+	// const viewDashboard = () => {
+	// 	props.Login();
+	// };
 	return (
 		<>
 			<div
@@ -36,7 +42,14 @@ export default function Home() {
 							We recieve result combining marketing, a creative and industry
 							experience...
 						</h3>
-						<Button> Invest </Button> <Button color="warning"> Login </Button>
+						<Button href="/dashboard/investment"> Invest </Button>{" "}
+						{!props.auth ? (
+							<Button color="warning" href="/dashboard/user">
+								Login
+							</Button>
+						) : (
+							""
+						)}
 					</Col>
 				</Row>
 				<section>
@@ -132,7 +145,9 @@ export default function Home() {
 										Join our whatsapp Group for Effective and Easy communication
 										on Trades
 									</p>
-									<Button color="primary"> Join Now </Button>
+									<Button color="primary" to="/login">
+										Join Now
+									</Button>
 								</div>
 							</div>
 						</div>
@@ -162,7 +177,12 @@ export default function Home() {
 					</Col>
 					<Col md="5">
 						<h1 className="title text-white"> Get Started Now </h1>
-						<Button className=" animation-on-hover" color="primary" size="lg">
+						<Button
+							className=" animation-on-hover"
+							color="primary"
+							size="lg"
+							href="/dashboard/investment"
+						>
 							CLick Here
 						</Button>
 					</Col>
@@ -261,3 +281,17 @@ export default function Home() {
 		</>
 	);
 }
+const mapStateToProps = (state) => ({
+	auth: state.authReducer,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	Login() {
+		dispatch(Login());
+	},
+	Logout() {
+		dispatch(Logout());
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
