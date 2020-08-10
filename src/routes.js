@@ -7,13 +7,6 @@ import UserProfile from "views/UserProfile.js";
 
 var routes = [
   {
-    path: "/user",
-    name: "Dashboard",
-    icon: "tim-icons icon-chart-pie-36",
-    component: Dashboard,
-    layout: "/dashboard",
-  },
-  {
     path: "/user/admin",
     name: "Dashboard",
     icon: "tim-icons icon-chart-pie-36",
@@ -22,15 +15,15 @@ var routes = [
   },
   {
     path: "/icons",
-    name: "Icons",
-    icon: "tim-icons icon-atom",
+    name: "Invest",
+    icon: "tim-icons icon-money-coins",
     component: Icons,
     layout: "/dashboard",
   },
   {
     path: "/notifications",
-    name: "Notifications",
-    icon: "tim-icons icon-bell-55",
+    name: "Request Withdrawal",
+    icon: "tim-icons icon-bank",
     component: Notifications,
     layout: "/dashboard",
   },
@@ -43,15 +36,15 @@ var routes = [
   },
   {
     path: "/tables",
-    name: "Table List",
+    name: "Admin Transactions",
     icon: "tim-icons icon-puzzle-10",
     component: TableList,
     layout: "/dashboard",
   },
   {
     path: "/typography",
-    name: "Typography",
-    icon: "tim-icons icon-align-center",
+    name: "Admin all users",
+    icon: "tim-icons icon-lock-circle",
     component: Typography,
     layout: "/dashboard",
   },

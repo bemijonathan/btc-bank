@@ -25,12 +25,12 @@ export default function About() {
             <img
               src="https://i2.wp.com/dailyhodl.com/wp-content/uploads/2020/04/wbg8239ie.jpg?fit=810%2C475&ssl=1"
               alt=""
-              style={{ minWidth: "350px" }}
+              style={{ width: "100%" }}
             />
           </Col>
           <Col>
             <h1> About Us </h1>
-            <h4>
+            <h4 className="text-white">
               Icointraders trading platform is a group of financial and
               cryptocurrency experts that invest in mining and cryptocurrency
               trading . We carefully examine the volatility of bitcoin and other
@@ -83,7 +83,7 @@ export default function About() {
             <img
               src="https://lwcdn.freebitco.in/wp-content/uploads/2020/04/Btc-faucets-worth-img.jpg"
               alt=""
-              style={{ minWidth: "350px" }}
+              style={{ width: "100%" }}
             />
           </Col>
         </Row>
@@ -148,21 +148,12 @@ export default function About() {
           </Col>
         </Row>
       </Container>
-      <section className="bg-info py-5 my-5">
-        <Container>
-          {/* <h1 className="text-center title text-white">Want to Know More ?</h1> */}
-          <Row className="my-5">
-            <Col className="text-center text-white">
-              <h5 className="title"> Want to say hello or find out more? </h5>
-              <Button> Send Us a Message </Button>
-            </Col>
-            <Col className="text-center text-white">
-              <h5 className="title text-white">Ready to start investing?</h5>
-              <Button> Register </Button>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      <Container className="py-5">
+        <h1 className="title text-center"> Send us a Message</h1>
+        <div className="text-center">
+          <Button size="lg"> Send Us a Message </Button>
+        </div>
+      </Container>
     </>
   );
 }

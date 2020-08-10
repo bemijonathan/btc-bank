@@ -1,3 +1,33 @@
+.chart_frame {
+  height: 560px;
+  background-color: #1d2330;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid #282e3b;
+  border-radius: 4px;
+  text-align: right;
+  line-height: 14px;
+  font-size: 12px;
+  font-feature-settings: normal;
+  text-size-adjust: 100%;
+  box-shadow: inset 0 -20px 0 0 #262b38;
+  padding: 1px;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+.frame_css {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  line-height: 14px;
+}
+.inner_frame {
+  height: 540px;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
 .__banner {
   background-image: url("../img/comingsoon.jpg");
   background-size: cover;
