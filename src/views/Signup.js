@@ -20,6 +20,7 @@ import {
 	Row,
 	Col,
 } from "reactstrap";
+import Notify from "react-notification-alert";
 
 export default class Signup extends React.Component {
 	state = {
@@ -27,13 +28,49 @@ export default class Signup extends React.Component {
 		password: "",
 		fullName: "",
 		error: {},
+		loading: false,
 	};
+
+	onDismiss() {
+		this.setState({ visible: false });
+	}
+
 	render() {
-		const Submit = (e) => {
+		let options = {
+			place: "tc",
+			message: "",
+			type: "",
+			autoDismiss: 300,
+			// icon: "icon-simple-remove",
+		};
+
+		const Submit = async (e) => {
+			this.setState({ loading: true });
 			e.preventDefault();
 			const { email, fullName, password } = this.state;
 			console.log(email, fullName, password, "submited");
-			fetchclient.post("signup");
+			const data = {
+				name: fullName,
+				email,
+				password,
+			};
+			try {
+				const response = await fetchclient.post("signup", data);
+				localStorage.setItem("auth-token", response.data.data.token);
+				this.refs.notify.notificationAlert({
+					...options,
+					message: "signed up successfully",
+					type: "success",
+				});
+			} catch (error) {
+				console.log(error.response);
+				this.refs.notify.notificationAlert({
+					...options,
+					message: error.response.data.error,
+					type: "danger",
+				});
+			}
+			this.setState({ loading: false });
 		};
 		const validate = () => {
 			const { email } = this.state;
@@ -46,6 +83,7 @@ export default class Signup extends React.Component {
 		};
 		return (
 			<div className="section section-signup">
+				<Notify ref="notify" />
 				<div
 					className="position-fixed bg-default"
 					style={{ width: "100%", zIndex: 4 }}
@@ -151,6 +189,7 @@ export default class Signup extends React.Component {
 											this.state.email.length &&
 											this.state.fullName.length &&
 											this.state.password.length &&
+											!this.state.loading &&
 											validate()
 												? false
 												: true
