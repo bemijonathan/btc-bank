@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
-
+import fetchclient from "../utils/axios";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -22,8 +22,28 @@ import {
 } from "reactstrap";
 
 export default class Signup extends React.Component {
-	state = {};
+	state = {
+		email: "",
+		password: "",
+		fullName: "",
+		error: {},
+	};
 	render() {
+		const Submit = (e) => {
+			e.preventDefault();
+			const { email, fullName, password } = this.state;
+			console.log(email, fullName, password, "submited");
+			fetchclient.post("signup");
+		};
+		const validate = () => {
+			const { email } = this.state;
+			var re = /\S+@\S+\.\S+/;
+			if (re.test(email)) {
+				return true;
+			}
+
+			return false;
+		};
 		return (
 			<div className="section section-signup">
 				<div
@@ -68,14 +88,19 @@ export default class Signup extends React.Component {
 											</InputGroupAddon>
 											<Input
 												placeholder="Full Name"
+												required={true}
 												type="text"
-												onFocus={(e) => this.setState({ fullNameFocus: true })}
-												onBlur={(e) => this.setState({ fullNameFocus: false })}
+												onInput={(e) =>
+													this.setState({ fullName: e.target.value })
+												}
+												onFocus={() => this.setState({ fullNameFocus: true })}
+												onBlur={() => this.setState({ fullNameFocus: false })}
 											/>
 										</InputGroup>
 										<InputGroup
 											className={classnames({
 												"input-group-focus": this.state.emailFocus,
+												"has-danger": !validate() && this.state.email.length,
 											})}
 										>
 											<InputGroupAddon addonType="prepend">
@@ -86,8 +111,12 @@ export default class Signup extends React.Component {
 											<Input
 												placeholder="Email"
 												type="text"
-												onFocus={(e) => this.setState({ emailFocus: true })}
-												onBlur={(e) => this.setState({ emailFocus: false })}
+												required={true}
+												onInput={(e) =>
+													this.setState({ email: e.target.value })
+												}
+												onFocus={() => this.setState({ emailFocus: true })}
+												onBlur={() => this.setState({ emailFocus: false })}
 											/>
 										</InputGroup>
 										<InputGroup
@@ -103,26 +132,42 @@ export default class Signup extends React.Component {
 											<Input
 												placeholder="Password"
 												type="text"
-												onFocus={(e) => this.setState({ passwordFocus: true })}
-												onBlur={(e) => this.setState({ passwordFocus: false })}
+												onInput={(e) =>
+													this.setState({ password: e.target.value })
+												}
+												onFocus={() => this.setState({ passwordFocus: true })}
+												onBlur={() => this.setState({ passwordFocus: false })}
 											/>
 										</InputGroup>
 									</Form>
 								</CardBody>
 								<CardFooter>
-									<Button className="btn-round" color="primary">
-										Get Started
-									</Button>
 									<Button
+										className="btn-round"
+										onClick={Submit}
 										color="primary"
-										to="signin"
-										tag={Link}
-										className="d-lg-none d-xl-none btn-round"
+										type="submit"
+										disabled={
+											this.state.email.length &&
+											this.state.fullName.length &&
+											this.state.password.length &&
+											validate()
+												? false
+												: true
+										}
 									>
-										Sign in Here
+										Get Started
 									</Button>
 								</CardFooter>
 							</Card>
+							<Button
+								color="primary"
+								to="signin"
+								tag={Link}
+								className="d-lg-none d-xl-none btn-round"
+							>
+								Sign in Here
+							</Button>
 						</Col>
 					</Row>
 				</Container>

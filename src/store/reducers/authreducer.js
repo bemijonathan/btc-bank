@@ -4,6 +4,7 @@ export const authReducer = (state = isAuthenticated(), action) => {
 			state = true;
 			return state;
 		case "LOGOUT":
+			localStorage.clear();
 			state = false;
 			return state;
 		default:
