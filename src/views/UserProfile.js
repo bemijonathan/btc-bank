@@ -23,13 +23,17 @@ const UserProfile = (props) => {
 	const [error, setError] = useState(false);
 
 	const submit = async () => {
-		const response = await fetchclient.patch("/user", {
-			email: user.email,
-			name: user.name,
-			about: user.about,
-		});
-		console.log(response);
-		props.history.push("/dashboard/user");
+		try {
+			const response = await fetchclient.patch("/user", {
+				email: user.email,
+				name: user.name,
+				about: user.about,
+			});
+			console.log(response);
+			props.history.push("/dashboard/user");
+		} catch (error) {
+			console.log(error.response);
+		}
 	};
 
 	async function getUser(id) {

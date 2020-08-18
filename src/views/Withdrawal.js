@@ -31,21 +31,24 @@ import {
 	InputGroup,
 	Form,
 	Input,
-	InputGroupText,
-	InputGroupAddon,
 } from "reactstrap";
+import fetchclient from "utils/axios";
 
 class Notifications extends React.Component {
-	notify = (color) => {
+	notify = (color, message) => {
 		var options = {};
 		options = {
 			place: "tr",
 			message: (
 				<div>
-					<div>
-						Welcome to <b>Black Dashboard React</b> - a beautiful freebie for
-						every web developer.
-					</div>
+					{color === "success" ? (
+						<div>
+							A confirmation mail will be sent to you in no time -
+							NB:Withdrawals might take some time to be completed
+						</div>
+					) : (
+						<div>{message}</div>
+					)}
 				</div>
 			),
 			type: color,
@@ -54,8 +57,30 @@ class Notifications extends React.Component {
 		};
 		this.refs.notificationAlert.notificationAlert(options);
 	};
-	state = {};
+	state = {
+		amount: "",
+		wallet: "",
+	};
 	render() {
+		const submit = async (e) => {
+			e.preventDefault();
+			this.notify("success");
+
+			try {
+				const { wallet, amount } = this.state;
+				const data = {
+					transactionsType: "WITHDRAWAL",
+					wallet,
+					amount,
+				};
+				const response = await fetchclient.post("transactions", {
+					data,
+				});
+				console.log(response);
+			} catch (error) {
+				console.log(error.response);
+			}
+		};
 		return (
 			<>
 				<div className="content">
@@ -69,62 +94,47 @@ class Notifications extends React.Component {
 									<CardTitle tag="h4">Request Withdrawal</CardTitle>
 								</CardHeader>
 								<CardBody>
-									<Form className="form">
-										<InputGroup
-											className={classnames({
-												"input-group-focus": this.state.anount,
-											})}
-										>
-											<InputGroupAddon addonType="prepend">
-												<InputGroupText>
-													<i className="tim-icons icon-email-85" />
-												</InputGroupText>
-											</InputGroupAddon>
-											<Input
-												placeholder="Amount"
-												type="number"
-												onFocus={(e) => this.setState({ amount: true })}
-												onBlur={(e) => this.setState({ amount: false })}
-											/>
-										</InputGroup>
-
-										<InputGroup
-											className={classnames({
-												"input-group-focus": this.state.anount,
-											})}
-										>
-											<InputGroupAddon addonType="prepend">
-												<InputGroupText>
-													<i className="tim-icons icon-email-85" />
-												</InputGroupText>
-											</InputGroupAddon>
-											<Input
-												placeholder="Amount"
-												type="number"
-												onFocus={(e) => this.setState({ amount: true })}
-												onBlur={(e) => this.setState({ amount: false })}
-											/>
-										</InputGroup>
-
+									<Form className="form" onSubmit={submit}>
 										<InputGroup
 											className={classnames({
 												"input-group-focus": this.state.passwordFocus,
 											})}
 										>
-											<InputGroupAddon addonType="prepend">
-												<InputGroupText>
-													<i className="tim-icons icon-lock-circle" />
-												</InputGroupText>
-											</InputGroupAddon>
 											<Input
-												placeholder="Password"
+												placeholder="Amount"
+												type="number"
+												onFocus={(e) => this.setState({ passwordFocus: true })}
+												onBlur={(e) => this.setState({ passwordFocus: false })}
+												onInput={(e) =>
+													this.setState({ amount: e.target.value })
+												}
+											/>
+										</InputGroup>
+										<InputGroup
+											className={classnames({
+												"input-group-focus": this.state.passwordFocus,
+											})}
+										>
+											<Input
+												placeholder="Wallet"
 												type="text"
 												onFocus={(e) => this.setState({ passwordFocus: true })}
 												onBlur={(e) => this.setState({ passwordFocus: false })}
+												onInput={(e) =>
+													this.setState({ wallet: e.target.value })
+												}
 											/>
 										</InputGroup>
 
-										<Button>WithDraw</Button>
+										<Button
+											disabled={
+												this.state.amount.length && this.state.wallet.length
+													? false
+													: true
+											}
+										>
+											WithDraw
+										</Button>
 									</Form>
 								</CardBody>
 							</Card>
