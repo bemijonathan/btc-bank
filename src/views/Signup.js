@@ -3,6 +3,8 @@ import NavBar from "components/Navbars/RTLNavbar";
 import fetchclient from "../utils/axios";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
+import { Login } from "../store/actions/auth";
+import { connect } from "react-redux";
 // reactstrap components
 import {
 	Button,
@@ -22,7 +24,7 @@ import {
 } from "reactstrap";
 import Notify from "react-notification-alert";
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
 	state = {
 		email: "",
 		password: "",
@@ -62,6 +64,8 @@ export default class Signup extends React.Component {
 					message: "signed up successfully",
 					type: "success",
 				});
+				this.props.Login();
+				this.props.history.push("/dashboard/user");
 			} catch (error) {
 				console.log(error.response);
 				this.refs.notify.notificationAlert({
@@ -214,3 +218,15 @@ export default class Signup extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	state: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	Login() {
+		dispatch(Login());
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

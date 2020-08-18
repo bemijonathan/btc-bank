@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 export const authReducer = (state = isAuthenticated(), action) => {
 	switch (action.type) {
 		case "LOGIN":
@@ -14,7 +16,13 @@ export const authReducer = (state = isAuthenticated(), action) => {
 
 const isAuthenticated = () => {
 	let token = localStorage.getItem("auth-token");
+
 	if (token) {
+		let user = jwt.decode(token);
+		if (Date.now() >= user.exp * 1000) {
+			localStorage.clear();
+			return false;
+		}
 		return true;
 	}
 	return false;

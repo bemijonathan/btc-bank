@@ -1,7 +1,8 @@
 import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
-
+import { connect } from "react-redux";
 import classnames from "classnames";
+import { Login } from "../store/actions/auth";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -23,7 +24,7 @@ import {
 import fetchclient from "../utils/axios";
 import Notify from "react-notification-alert";
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
 	state = {
 		email: "",
 		password: "",
@@ -54,6 +55,11 @@ export default class Signup extends React.Component {
 					type: "success",
 				});
 				console.log(response);
+				debugger;
+				localStorage.setItem("auth-token", response.data.data);
+				console.log(response);
+				this.props.Login();
+				this.props.history.push("/dashboard/user");
 			} catch (error) {
 				console.log(error.response);
 				this.refs.notify.notificationAlert({
@@ -165,3 +171,15 @@ export default class Signup extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	authenticated: state,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	Login() {
+		dispatch(Login());
+	},
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
