@@ -57,28 +57,34 @@ class Notifications extends React.Component {
 		};
 		this.refs.notificationAlert.notificationAlert(options);
 	};
+	componentDidMount() {
+		fetchclient("user").then((user) => {
+			console.log(user);
+			this.setState({ balance: user.data.data.balance.confirmed });
+		});
+	}
 	state = {
 		amount: "",
 		wallet: "",
+		balance: undefined,
 	};
 	render() {
 		const submit = async (e) => {
 			e.preventDefault();
-			this.notify("success");
-
 			try {
 				const { wallet, amount } = this.state;
 				const data = {
-					transactionsType: "WITHDRAWAL",
 					wallet,
 					amount,
 				};
-				const response = await fetchclient.post("transactions", {
+				const response = await fetchclient.post("transaction", {
 					data,
 				});
 				console.log(response);
+				this.notify("success");
 			} catch (error) {
 				console.log(error.response);
+				this.notify("danger", error.response.data.error);
 			}
 		};
 		return (
@@ -87,6 +93,7 @@ class Notifications extends React.Component {
 					<div className="react-notification-alert-container">
 						<NotificationAlert ref="notificationAlert" />
 					</div>
+
 					<Row>
 						<Col md="8" xs="10" sm="11" className="mx-auto">
 							<Card>
@@ -94,6 +101,11 @@ class Notifications extends React.Component {
 									<CardTitle tag="h4">Request Withdrawal</CardTitle>
 								</CardHeader>
 								<CardBody>
+									<h1>
+										{" "}
+										Balance:{" "}
+										{this.state.balance ? this.state.balance + "btc" : "$0.000"}
+									</h1>
 									<Form className="form" onSubmit={submit}>
 										<InputGroup
 											className={classnames({

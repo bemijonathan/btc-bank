@@ -2,13 +2,20 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardHeader, CardTitle, Row, Col } from "reactstrap";
+import fetchclient from "utils/axios";
 
 class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			bigChartData: "data1",
+			balance: {},
 		};
+	}
+	componentDidMount() {
+		fetchclient("/user").then((data) => {
+			this.setState({ balance: data.data.data.balance });
+		});
 	}
 	setBgChartData = (name) => {
 		this.setState({
@@ -25,7 +32,10 @@ class Dashboard extends React.Component {
 								<CardHeader>
 									<h5 className="card-category">Total Balance</h5>
 									<CardTitle tag="h3">
-										<i className="tim-icons icon-bell-55 text-info" /> $0.000
+										<i className="tim-icons icon-bell-55 text-info" />{" "}
+										{this.state.balance.confirmed
+											? "$" + this.state.balance.confirmed
+											: "$0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
@@ -35,7 +45,10 @@ class Dashboard extends React.Component {
 								<CardHeader>
 									<h5 className="card-category">Invested Amount</h5>
 									<CardTitle tag="h3">
-										<i className="tim-icons icon-coins text-primary" /> $0.000
+										<i className="tim-icons icon-coins text-primary" />{" "}
+										{this.state.balance.deposit
+											? this.state.balance.deposit
+											: "$0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
@@ -45,7 +58,12 @@ class Dashboard extends React.Component {
 								<CardHeader>
 									<h5 className="card-category">Total Earnings</h5>
 									<CardTitle tag="h3">
-										<i className="tim-icons icon-bank text-success" /> $0.000
+										<i className="tim-icons icon-bank text-success" />{" "}
+										{this.state.balance.deposit - this.state.balance.confirmed >
+										0
+											? this.state.balance.deposit -
+											  this.state.balance.confirmed
+											: "$0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>

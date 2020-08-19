@@ -153,6 +153,106 @@ function Home(props) {
 						</div>
 					</section>
 				</section>
+				<Container>
+					<Row>
+						<Col md="4" className="section-coins">
+							<hr className="line-info" />
+							<h1>
+								Choose the coin
+								<span className="text-info"> that fits your needs</span>
+							</h1>
+						</Col>
+					</Row>
+					<Row>
+						<Col md="4">
+							<Card className="card-coin card-plain">
+								<CardBody>
+									<Row>
+										<Col className="text-center" md="12">
+											<h4 className="text-uppercase">BRONZE COIN</h4>
+											<span>Plan</span>
+											<hr className="line-primary" />
+										</Col>
+									</Row>
+									<Row>
+										<ListGroup>
+											<ListGroupItem>0.10btc - 5btc</ListGroupItem>
+											<ListGroupItem>+15% profit </ListGroupItem>
+											<ListGroupItem>24/7 Support</ListGroupItem>
+										</ListGroup>
+									</Row>
+								</CardBody>
+								<CardFooter className="text-center">
+									<Button
+										className="btn-simple"
+										href="dashboard/investment"
+										color="primary"
+									>
+										Get Started
+									</Button>
+								</CardFooter>
+							</Card>
+						</Col>
+						<Col md="4">
+							<Card className="card-coin card-plain">
+								<CardBody>
+									<Row>
+										<Col className="text-center" md="12">
+											<h4 className="text-uppercase">SILVER COIN</h4>
+											<span>Plan</span>
+											<hr className="line-success" />
+										</Col>
+									</Row>
+									<Row>
+										<ListGroup>
+											<ListGroupItem>5btc - 15btc</ListGroupItem>
+											<ListGroupItem>+30% Profits </ListGroupItem>
+											<ListGroupItem>24/7 Support</ListGroupItem>
+										</ListGroup>
+									</Row>
+								</CardBody>
+								<CardFooter className="text-center">
+									<Button
+										className="btn-simple"
+										href="dashboard/investment"
+										color="success"
+									>
+										Get Started
+									</Button>
+								</CardFooter>
+							</Card>
+						</Col>
+						<Col md="4">
+							<Card className="card-coin card-plain">
+								<CardBody>
+									<Row>
+										<Col className="text-center" md="12">
+											<h4 className="text-uppercase">Bright Coin</h4>
+											<span>Plan</span>
+											<hr className="line-info" />
+										</Col>
+									</Row>
+									<Row>
+										<ListGroup>
+											<ListGroupItem>16btc - 23btc</ListGroupItem>
+											<ListGroupItem>+50% </ListGroupItem>
+											<ListGroupItem>24/7 Support</ListGroupItem>
+										</ListGroup>
+									</Row>
+								</CardBody>
+								<CardFooter className="text-center">
+									<Button
+										className="btn-simple"
+										href="dashboard/investment"
+										color="info"
+									>
+										Get Started
+									</Button>
+								</CardFooter>
+							</Card>
+						</Col>
+					</Row>
+				</Container>
 
 				{/** world stats Us Div **/}
 				<section className="pt-5">
@@ -189,94 +289,6 @@ function Home(props) {
 				</Row>
 
 				{/** select Plan **/}
-				<Container>
-					<Row>
-						<Col md="4" className="section-coins">
-							<hr className="line-info" />
-							<h1>
-								Choose the coin
-								<span className="text-info">that fits your needs</span>
-							</h1>
-						</Col>
-					</Row>
-					<Row>
-						<Col md="4">
-							<Card className="card-coin card-plain">
-								<CardBody>
-									<Row>
-										<Col className="text-center" md="12">
-											<h4 className="text-uppercase">Light Coin</h4>
-											<span>Plan</span>
-											<hr className="line-primary" />
-										</Col>
-									</Row>
-									<Row>
-										<ListGroup>
-											<ListGroupItem>50 messages</ListGroupItem>
-											<ListGroupItem>100 emails</ListGroupItem>
-											<ListGroupItem>24/7 Support</ListGroupItem>
-										</ListGroup>
-									</Row>
-								</CardBody>
-								<CardFooter className="text-center">
-									<Button className="btn-simple" color="primary">
-										Get plan
-									</Button>
-								</CardFooter>
-							</Card>
-						</Col>
-						<Col md="4">
-							<Card className="card-coin card-plain">
-								<CardBody>
-									<Row>
-										<Col className="text-center" md="12">
-											<h4 className="text-uppercase">Dark Coin</h4>
-											<span>Plan</span>
-											<hr className="line-success" />
-										</Col>
-									</Row>
-									<Row>
-										<ListGroup>
-											<ListGroupItem>150 messages</ListGroupItem>
-											<ListGroupItem>1000 emails</ListGroupItem>
-											<ListGroupItem>24/7 Support</ListGroupItem>
-										</ListGroup>
-									</Row>
-								</CardBody>
-								<CardFooter className="text-center">
-									<Button className="btn-simple" color="success">
-										Get plan
-									</Button>
-								</CardFooter>
-							</Card>
-						</Col>
-						<Col md="4">
-							<Card className="card-coin card-plain">
-								<CardBody>
-									<Row>
-										<Col className="text-center" md="12">
-											<h4 className="text-uppercase">Bright Coin</h4>
-											<span>Plan</span>
-											<hr className="line-info" />
-										</Col>
-									</Row>
-									<Row>
-										<ListGroup>
-											<ListGroupItem>350 messages</ListGroupItem>
-											<ListGroupItem>10K emails</ListGroupItem>
-											<ListGroupItem>24/7 Support</ListGroupItem>
-										</ListGroup>
-									</Row>
-								</CardBody>
-								<CardFooter className="text-center">
-									<Button className="btn-simple" color="info">
-										Get plan
-									</Button>
-								</CardFooter>
-							</Card>
-						</Col>
-					</Row>
-				</Container>
 			</Container>
 		</>
 	);

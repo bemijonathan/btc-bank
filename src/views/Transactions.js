@@ -62,7 +62,7 @@ export default function Transactions() {
 									"loading....."
 								) : error ? (
 									"error occured...."
-								) : (
+								) : data.length ? (
 									<Table className="tablesorter" responsive>
 										<thead className="text-primary">
 											<tr>
@@ -74,6 +74,14 @@ export default function Transactions() {
 										</thead>
 										<tbody>{TableLoop()}</tbody>
 									</Table>
+								) : (
+									<>
+										<h3> You Have no Confirmed Transaction</h3>
+										<h5>
+											NB: if you made a transaction You have to wait at least
+											2hrs for transaction to be Confirmed
+										</h5>
+									</>
 								)}
 							</CardBody>
 						</Card>

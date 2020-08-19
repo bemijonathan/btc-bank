@@ -4,11 +4,13 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import Footer from "components/Footer/Footer.js";
+// import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import routes from "routes.js";
+import { user as userRoute, admin as adminRoute } from "routes.js";
 import logo from "assets/img/react-logo.png";
+import jwt from "jsonwebtoken";
 
+let routes;
 var ps;
 
 class Admin extends React.Component {
@@ -19,6 +21,13 @@ class Admin extends React.Component {
 			sidebarOpened:
 				document.documentElement.className.indexOf("nav-open") !== -1,
 		};
+		let token = localStorage.getItem("auth-token");
+		let admin = jwt.decode(token);
+		if (token && admin.admin) {
+			routes = adminRoute;
+		} else {
+			routes = userRoute;
+		}
 	}
 	componentDidMount() {
 		if (navigator.platform.indexOf("Win") > -1) {
@@ -113,9 +122,6 @@ class Admin extends React.Component {
 							sidebarOpened={this.state.sidebarOpened}
 						/>
 						<Switch>{this.getRoutes(routes)}</Switch>
-						{this.props.location.pathname.indexOf("maps") !== -1 ? null : (
-							<Footer fluid />
-						)}
 					</div>
 				</div>
 			</>

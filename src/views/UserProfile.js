@@ -18,9 +18,16 @@ import {
 import fetchclient from "utils/axios";
 
 const UserProfile = (props) => {
-	const [user, userData] = useState({});
+	const [user, userData] = useState({
+		name: "",
+		phone: "",
+		about: "",
+		email: "",
+		country: "",
+	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
+	const [disabled, setDisabled] = useState(false);
 
 	const submit = async () => {
 		try {
@@ -41,8 +48,8 @@ const UserProfile = (props) => {
 		setError(false);
 		try {
 			setError(true);
-			const response = await fetchclient("/user/" + id);
-			userData(response.data.data);
+			const response = await fetchclient("/user/");
+			userData(response.data.data.user);
 			console.log(response);
 		} catch (error) {
 			setError(true);
@@ -58,6 +65,18 @@ const UserProfile = (props) => {
 		getUser(userid.id);
 		// userid.id;
 	}, []);
+
+	useEffect(() => {
+		let y =
+			user?.name?.length &&
+			user?.email?.length &&
+			user?.phone?.length &&
+			user?.country?.length
+				? false
+				: true;
+		setDisabled(y);
+	}, [user, userData]);
+
 	return (
 		<>
 			<div className="content">
@@ -88,6 +107,36 @@ const UserProfile = (props) => {
 													/>
 												</FormGroup>
 											</Col>
+
+											<Col className="pl-md-1">
+												<FormGroup>
+													<label htmlFor="exampleInputEmail1">Username</label>
+													<Input
+														placeholder="username"
+														type="phone"
+														value={user.username}
+														onInput={(e) =>
+															userData({ ...user, username: e.target.value })
+														}
+													/>
+												</FormGroup>
+											</Col>
+										</Row>
+										<Row>
+											<Col className="pr-md-1">
+												<FormGroup>
+													<label>Phone</label>
+													<Input
+														placeholder="Phone"
+														type="text"
+														defaultValue={user.phone ? user.phone : ""}
+														onInput={(e) =>
+															userData({ ...user, phone: e.target.value })
+														}
+													/>
+												</FormGroup>
+											</Col>
+
 											<Col className="pl-md-1">
 												<FormGroup>
 													<label htmlFor="exampleInputEmail1">
@@ -105,7 +154,20 @@ const UserProfile = (props) => {
 											</Col>
 										</Row>
 										<Row>
-											<Col>
+											<Col className="pr-md-1">
+												<FormGroup>
+													<label>Country</label>
+													<Input
+														placeholder="Germany"
+														type="email"
+														value={user.country}
+														onInput={(e) =>
+															userData({ ...user, country: e.target.value })
+														}
+													/>
+												</FormGroup>
+											</Col>
+											<Col className="pl-md-1">
 												<FormGroup>
 													<label>About Me</label>
 													<Input
@@ -128,6 +190,7 @@ const UserProfile = (props) => {
 										color="primary"
 										type="submit"
 										onClick={submit}
+										disabled={disabled}
 									>
 										Save
 									</Button>
@@ -151,9 +214,11 @@ const UserProfile = (props) => {
 										<h5 className="title">{user.name}</h5>
 										<p className="description">{user.email}</p>
 									</div>
-									<div className="card-description">{user.about}</div>
+									<div className="card-description text-center">
+										{user.about}
+									</div>
 									<div style={{ textAlign: "center" }}>
-										<Button color="danger"> Delete Account </Button>
+										<Button color="danger">Delete Account</Button>
 									</div>
 								</CardBody>
 							</Card>

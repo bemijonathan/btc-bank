@@ -10,6 +10,7 @@ import PageNotFound from "./views/PageNotFound";
 import Comingsoon from "views/Comingsoon";
 import About from "views/About";
 import Contact from "views/Contact";
+import Footer from "./components/Footer/Footer";
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
@@ -46,6 +47,7 @@ ReactDOM.render(
 				<Route path="*" exact={true} component={PageNotFound} />
 			</Switch>
 		</Router>
+		<Footer />
 	</Provider>,
 	document.getElementById("root")
 );
