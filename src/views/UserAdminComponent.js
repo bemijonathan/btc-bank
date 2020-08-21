@@ -71,10 +71,11 @@ const UserProfile = (props) => {
 		setError(false);
 		try {
 			setError(true);
-			const response = await fetchclient("/user/");
+			const response = await fetchclient("/users/" + props.match.params.user);
 			userData(response.data.data.user);
 			console.log(response);
 		} catch (error) {
+			console.log(error.response);
 			setError(true);
 		} finally {
 			setLoading(false);
@@ -87,7 +88,7 @@ const UserProfile = (props) => {
 		const userid = jwt.decode(token);
 		getUser(userid.id);
 		// userid.id;
-	}, []);
+	});
 
 	useEffect(() => {
 		let y =

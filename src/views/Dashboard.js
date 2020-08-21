@@ -1,5 +1,5 @@
 import React from "react";
-
+import "assets/css/custom.css";
 // reactstrap components
 import { Card, CardHeader, CardTitle, Row, Col } from "reactstrap";
 import fetchclient from "utils/axios";
@@ -58,7 +58,7 @@ class Dashboard extends React.Component {
 								<CardHeader>
 									<h5 className="card-category">Total Earnings</h5>
 									<CardTitle tag="h3">
-										<i className="tim-icons icon-bank text-success" />{" "}
+										<i className="tim-icons icon-bank text-success" />
 										{this.state.balance.deposit - this.state.balance.confirmed >
 										0
 											? this.state.balance.deposit -

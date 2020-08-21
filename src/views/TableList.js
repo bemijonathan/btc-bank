@@ -1,171 +1,199 @@
-/*!
-
-=========================================================
-* Black Dashboard React v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-
-// reactstrap components
+import Notify from "react-notification-alert";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Table,
-  Row,
-  Col
+	Card,
+	CardHeader,
+	CardBody,
+	CardTitle,
+	Table,
+	Row,
+	Col,
+	Button,
+	Modal,
+	ModalBody,
+	Form,
+	InputGroup,
+	Input,
+	InputGroupAddon,
+	InputGroupText,
 } from "reactstrap";
+import fetchclient from "utils/axios";
+import classnames from "classnames";
 
 class Tables extends React.Component {
-  render() {
-    return (
-      <>
-        <div className="content">
-          <Row>
-            <Col md="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle tag="h4">Simple Table</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Table className="tablesorter" responsive>
-                    <thead className="text-primary">
-                      <tr>
-                        <th>Name</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th className="text-center">Salary</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td className="text-center">$36,738</td>
-                      </tr>
-                      <tr>
-                        <td>Minerva Hooper</td>
-                        <td>Curaçao</td>
-                        <td>Sinaai-Waas</td>
-                        <td className="text-center">$23,789</td>
-                      </tr>
-                      <tr>
-                        <td>Sage Rodriguez</td>
-                        <td>Netherlands</td>
-                        <td>Baileux</td>
-                        <td className="text-center">$56,142</td>
-                      </tr>
-                      <tr>
-                        <td>Philip Chaney</td>
-                        <td>Korea, South</td>
-                        <td>Overland Park</td>
-                        <td className="text-center">$38,735</td>
-                      </tr>
-                      <tr>
-                        <td>Doris Greene</td>
-                        <td>Malawi</td>
-                        <td>Feldkirchen in Kärnten</td>
-                        <td className="text-center">$63,542</td>
-                      </tr>
-                      <tr>
-                        <td>Mason Porter</td>
-                        <td>Chile</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$78,615</td>
-                      </tr>
-                      <tr>
-                        <td>Jon Porter</td>
-                        <td>Portugal</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$98,615</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md="12">
-              <Card className="card-plain">
-                <CardHeader>
-                  <CardTitle tag="h4">Table on Plain Background</CardTitle>
-                  <p className="category">Here is a subtitle for this table</p>
-                </CardHeader>
-                <CardBody>
-                  <Table className="tablesorter" responsive>
-                    <thead className="text-primary">
-                      <tr>
-                        <th>Name</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th className="text-center">Salary</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td className="text-center">$36,738</td>
-                      </tr>
-                      <tr>
-                        <td>Minerva Hooper</td>
-                        <td>Curaçao</td>
-                        <td>Sinaai-Waas</td>
-                        <td className="text-center">$23,789</td>
-                      </tr>
-                      <tr>
-                        <td>Sage Rodriguez</td>
-                        <td>Netherlands</td>
-                        <td>Baileux</td>
-                        <td className="text-center">$56,142</td>
-                      </tr>
-                      <tr>
-                        <td>Philip Chaney</td>
-                        <td>Korea, South</td>
-                        <td>Overland Park</td>
-                        <td className="text-center">$38,735</td>
-                      </tr>
-                      <tr>
-                        <td>Doris Greene</td>
-                        <td>Malawi</td>
-                        <td>Feldkirchen in Kärnten</td>
-                        <td className="text-center">$63,542</td>
-                      </tr>
-                      <tr>
-                        <td>Mason Porter</td>
-                        <td>Chile</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$78,615</td>
-                      </tr>
-                      <tr>
-                        <td>Jon Porter</td>
-                        <td>Portugal</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$98,615</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-      </>
-    );
-  }
+	state = {
+		users: [],
+		modalStatus: false,
+		id: "",
+		status: "",
+		disabled: false,
+	};
+	getDAta() {
+		fetchclient("/transaction/all").then((users) => {
+			console.log(users);
+			this.setState({ users: users.data.data });
+		});
+	}
+	componentDidMount() {
+		this.getDAta();
+	}
+	render() {
+		const editTransactions = (id) => {
+			this.setState({ id, modalStatus: true });
+		};
+		const toggle = () => {
+			this.setState({ modalStatus: false });
+		};
+		const { users, modalStatus, status, id } = this.state;
+
+		let options = {
+			place: "tc",
+			message: "",
+			type: "",
+			autoDismiss: 3,
+			// icon: "icon-simple-remove",
+		};
+
+		const AddCoins = async (e) => {
+			e.preventDefault();
+			this.setState({ disabled: true });
+			try {
+				const x = await fetchclient.patch("transaction/" + id, {
+					status,
+				});
+				console.log(x);
+				this.refs.notify.notificationAlert({
+					...options,
+					message: "coin added sucessfully",
+					type: "success",
+				});
+				this.getDAta();
+			} catch (error) {
+				console.log(error.response);
+				this.refs.notify.notificationAlert({
+					...options,
+					message: error.response.data?.error?.message
+						? error.response.data.error.message
+						: "failed to add coin",
+					type: "danger",
+				});
+			}
+			this.setState({ disabled: false });
+		};
+		return (
+			<>
+				<div className="content">
+					<Notify ref="notify" />
+					<Row>
+						<Col md="12">
+							<Card>
+								<CardHeader>
+									<CardTitle tag="h4">All Transactions</CardTitle>
+								</CardHeader>
+								<CardBody>
+									<Table className="tablesorter" responsive>
+										<thead className="text-primary">
+											<tr>
+												<th>Name</th>
+												<th>Country</th>
+												<th>City</th>
+												<th>Salary</th>
+												<th className="text-center"> Modify </th>
+											</tr>
+										</thead>
+										<tbody>
+											{users.map((e) => {
+												return (
+													<tr key={e._id}>
+														<td>Jon Porter</td>
+														<td>{e.transactionsType}</td>
+														<td>{e.status}</td>
+														<td>{e.amount}btc</td>
+														<td className="text-center">
+															<Button
+																size="sm"
+																onClick={() => {
+																	editTransactions(e._id);
+																}}
+															>
+																Update
+															</Button>
+														</td>
+														<td>
+															<Button
+																size="sm"
+																onClick={() =>
+																	this.props.history.push(
+																		"/dashboard/admin/" + e._id
+																	)
+																}
+															>
+																{" "}
+																View{" "}
+															</Button>
+														</td>
+													</tr>
+												);
+											})}
+										</tbody>
+									</Table>
+								</CardBody>
+							</Card>
+						</Col>
+					</Row>
+
+					<Modal isOpen={modalStatus} toggle={toggle}>
+						<ModalBody>
+							<Card>
+								<CardBody>
+									<Form className="form" onSubmit={AddCoins}>
+										<InputGroup
+											className={classnames({
+												"input-group-focus": this.state.statusFocus,
+											})}
+										>
+											<InputGroupAddon addonType="prepend">
+												<InputGroupText>
+													<i className="tim-icons icon-lock-circle" />
+												</InputGroupText>
+											</InputGroupAddon>
+											<Input
+												placeholder="Status"
+												type="select"
+												onFocus={(e) => this.setState({ statusFocus: true })}
+												onBlur={(e) => this.setState({ statusFocus: false })}
+												onChange={(e) =>
+													this.setState({ status: e.target.value })
+												}
+											>
+												<option selected={true} disabled={true}>
+													select
+												</option>
+												<option value={"PENDING"}>Pending</option>
+												<option value={"CONFIRMED"}>Confirmed</option>
+												<option value={"FAILED"}>Failed</option>
+											</Input>
+										</InputGroup>
+										<Button
+											className="btn-round"
+											color="primary"
+											disabled={
+												this.state.status.length && !this.state.disabled
+													? false
+													: true
+											}
+										>
+											Update
+										</Button>
+									</Form>
+								</CardBody>
+							</Card>
+						</ModalBody>
+					</Modal>
+				</div>
+			</>
+		);
+	}
 }
 
 export default Tables;

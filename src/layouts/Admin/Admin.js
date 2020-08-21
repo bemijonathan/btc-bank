@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
-
+import UserComponent from "../../views/UserAdminComponent";
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 // import Footer from "components/Footer/Footer.js";
@@ -97,34 +97,35 @@ class Admin extends React.Component {
 	};
 	render() {
 		return (
-			<>
-				<div className="wrapper">
-					<Sidebar
+			<div className="wrapper">
+				<Sidebar
+					{...this.props}
+					routes={routes}
+					bgColor={this.state.backgroundColor}
+					logo={{
+						outterLink: "/",
+						text: "Telegraphbtc",
+						imgSrc: logo,
+					}}
+					toggleSidebar={this.toggleSidebar}
+				/>
+				<div
+					className="main-panel"
+					ref="mainPanel"
+					data={this.state.backgroundColor}
+				>
+					<AdminNavbar
 						{...this.props}
-						routes={routes}
-						bgColor={this.state.backgroundColor}
-						logo={{
-							outterLink: "/",
-							text: "Telegraphbtc",
-							imgSrc: logo,
-						}}
+						brandText={this.getBrandText("/home")}
 						toggleSidebar={this.toggleSidebar}
+						sidebarOpened={this.state.sidebarOpened}
 					/>
-					<div
-						className="main-panel"
-						ref="mainPanel"
-						data={this.state.backgroundColor}
-					>
-						<AdminNavbar
-							{...this.props}
-							brandText={this.getBrandText("/home")}
-							toggleSidebar={this.toggleSidebar}
-							sidebarOpened={this.state.sidebarOpened}
-						/>
-						<Switch>{this.getRoutes(routes)}</Switch>
-					</div>
+					<Switch>
+						{this.getRoutes(routes)}
+						<Route path="/dashboard/admin/:user" component={UserComponent} />
+					</Switch>
 				</div>
-			</>
+			</div>
 		);
 	}
 }

@@ -4,7 +4,7 @@ import React from "react";
 class Footer extends React.Component {
 	render() {
 		return (
-			<footer
+			<div
 				style={{
 					padding: 0,
 					textAlign: "center",
@@ -17,7 +17,7 @@ class Footer extends React.Component {
 			>
 				© {new Date().getFullYear()} all rights reserved by{" "}
 				<a href="/">cointelegraphbitcoin</a>
-			</footer>
+			</div>
 		);
 	}
 }

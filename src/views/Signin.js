@@ -35,7 +35,7 @@ class Signup extends React.Component {
 			place: "tc",
 			message: "",
 			type: "",
-			autoDismiss: 300,
+			autoDismiss: 3,
 			// icon: "icon-simple-remove",
 		};
 
@@ -131,7 +131,7 @@ class Signup extends React.Component {
 											</InputGroupAddon>
 											<Input
 												placeholder="Password"
-												type="text"
+												type="password"
 												onFocus={(e) => this.setState({ passwordFocus: true })}
 												onBlur={(e) => this.setState({ passwordFocus: false })}
 												onInput={(e) =>

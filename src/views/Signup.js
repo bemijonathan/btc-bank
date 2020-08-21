@@ -23,12 +23,16 @@ import {
 	Col,
 } from "reactstrap";
 import Notify from "react-notification-alert";
+import countries from "../variables/coutries";
 
 class Signup extends React.Component {
 	state = {
 		email: "",
 		password: "",
 		fullName: "",
+		middleName: "",
+		phone: "",
+		country: "",
 		error: {},
 		loading: false,
 	};
@@ -49,12 +53,22 @@ class Signup extends React.Component {
 		const Submit = async (e) => {
 			this.setState({ loading: true });
 			e.preventDefault();
-			const { email, fullName, password } = this.state;
+			const {
+				email,
+				fullName,
+				password,
+				phone,
+				middleName,
+				country,
+			} = this.state;
 			console.log(email, fullName, password, "submited");
 			const data = {
 				name: fullName,
 				email,
 				password,
+				phone,
+				middleName,
+				country,
 			};
 			try {
 				const response = await fetchclient.post("signup", data);
@@ -95,7 +109,7 @@ class Signup extends React.Component {
 					<NavBar />
 				</div>
 				<Container>
-					<Row className=" justify-content-center align-items-center __h-screen">
+					<Row className=" justify-content-center align-items-center __h-screen pt-5">
 						<Col lg="6" className="d-none d-lg-block d-xl-block">
 							<h3 className="display-3 text-white">
 								Join the King of crypto Investments
@@ -141,6 +155,48 @@ class Signup extends React.Component {
 										</InputGroup>
 										<InputGroup
 											className={classnames({
+												"input-group-focus": this.state.middleNameFocus,
+											})}
+										>
+											<InputGroupAddon addonType="prepend">
+												<InputGroupText>
+													<i className="tim-icons icon-single-02" />
+												</InputGroupText>
+											</InputGroupAddon>
+											<Input
+												placeholder="Middle Name"
+												required={true}
+												type="text"
+												onInput={(e) =>
+													this.setState({ middleName: e.target.value })
+												}
+												onFocus={() => this.setState({ middleNameFocus: true })}
+												onBlur={() => this.setState({ middleNameFocus: false })}
+											/>
+										</InputGroup>
+										<InputGroup
+											className={classnames({
+												"input-group-focus": this.state.phoneFocus,
+											})}
+										>
+											<InputGroupAddon addonType="prepend">
+												<InputGroupText>
+													<i className="tim-icons icon-badge" />
+												</InputGroupText>
+											</InputGroupAddon>
+											<Input
+												placeholder="Phone"
+												required={true}
+												type="tel"
+												onInput={(e) =>
+													this.setState({ phone: e.target.value })
+												}
+												onFocus={() => this.setState({ phoneFocus: true })}
+												onBlur={() => this.setState({ phoneFocus: false })}
+											/>
+										</InputGroup>
+										<InputGroup
+											className={classnames({
 												"input-group-focus": this.state.emailFocus,
 												"has-danger": !validate() && this.state.email.length,
 											})}
@@ -161,6 +217,44 @@ class Signup extends React.Component {
 												onBlur={() => this.setState({ emailFocus: false })}
 											/>
 										</InputGroup>
+
+										<InputGroup
+											className={classnames({
+												"input-group-focus": this.state.countryFocus,
+											})}
+										>
+											<InputGroupAddon addonType="prepend">
+												<InputGroupText>
+													<i className="tim-icons icon-compass-05" />
+												</InputGroupText>
+											</InputGroupAddon>
+
+											<Input
+												type="select"
+												name="select"
+												id="exampleSelect"
+												onFocus={() => this.setState({ countryFocus: true })}
+												onBlur={() => this.setState({ countryFocus: false })}
+												value={
+													this.state.country ? this.state.country : "Country"
+												}
+												onChange={(e) =>
+													this.setState({ country: e.target.value })
+												}
+											>
+												<option selected={true} disabled={true}>
+													Country
+												</option>
+												{countries.map((e, i) => {
+													return (
+														<option key={e.country + i} value={e.country}>
+															{e.country}
+														</option>
+													);
+												})}
+											</Input>
+										</InputGroup>
+
 										<InputGroup
 											className={classnames({
 												"input-group-focus": this.state.passwordFocus,
@@ -173,7 +267,7 @@ class Signup extends React.Component {
 											</InputGroupAddon>
 											<Input
 												placeholder="Password"
-												type="text"
+												type="password"
 												onInput={(e) =>
 													this.setState({ password: e.target.value })
 												}
@@ -193,6 +287,9 @@ class Signup extends React.Component {
 											this.state.email.length &&
 											this.state.fullName.length &&
 											this.state.password.length &&
+											this.state.phone.length &&
+											this.state.middleName.length &&
+											this.state.country.length &&
 											!this.state.loading &&
 											validate()
 												? false

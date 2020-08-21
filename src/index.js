@@ -31,23 +31,27 @@ const DashboardRoute = (props) => {
 };
 
 ReactDOM.render(
-	<Provider store={Store}>
-		<Router history={hist}>
-			<Switch>
-				<Route path="/" exact component={Comingsoon} />
-				<Route path="/home" component={Home} history={hist} />
-				<Route path="/signup" component={SignUp} />
-				<Route path="/about" component={About} />
-				<Route path="/contact" component={Contact} />
-				<Route path="/signin" component={Signin} />
-				<Route
-					path="/dashboard"
-					render={(props) => <DashboardRoute {...props} />}
-				/>
-				<Route path="*" exact={true} component={PageNotFound} />
-			</Switch>
-		</Router>
-		<Footer />
-	</Provider>,
+	<main>
+		<Provider store={Store}>
+			<Router history={hist}>
+				<Switch>
+					<Route path="/" exact component={Comingsoon} />
+					<Route path="/home" component={Home} history={hist} />
+					<Route path="/signup" component={SignUp} />
+					<Route path="/about" component={About} />
+					<Route path="/contact" component={Contact} />
+					<Route path="/signin" component={Signin} />
+					<Route
+						path="/dashboard"
+						render={(props) => <DashboardRoute {...props} />}
+					/>
+					<Route path="*" exact={true} component={PageNotFound} />
+				</Switch>
+			</Router>
+		</Provider>
+		<div>
+			<Footer />
+		</div>
+	</main>,
 	document.getElementById("root")
 );
