@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import { Row, Container, Col, Input, Button, Alert } from "reactstrap";
 
-export default function Comingsoon() {
+export default function Comingsoon(props) {
 	const [visible, setVisible] = useState(false);
 	const [disable, setDisable] = useState(false);
 
@@ -15,6 +16,10 @@ export default function Comingsoon() {
 			setDisable(false);
 		}, 2000);
 	};
+	useEffect(() => {
+		props.history.push("/home");
+	});
+
 	return (
 		<div className="__banner">
 			<Alert
