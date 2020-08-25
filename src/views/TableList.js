@@ -27,17 +27,39 @@ class Tables extends React.Component {
 		id: "",
 		status: "",
 		disabled: false,
+		duplicateData: [],
 	};
 	getDAta() {
 		fetchclient("/transaction/all").then((users) => {
 			console.log(users);
-			this.setState({ users: users.data.data });
+			this.setState({ users: users.data.data, duplicateData: users.data.data });
 		});
 	}
 	componentDidMount() {
 		this.getDAta();
 	}
 	render() {
+		const searchCoin = (e) => {
+			if (e.target.value.length) {
+				const searchUser = this.state.users.filter((f) =>
+					f.user?.name?.includes(e.target.value)
+				);
+				this.setState({ users: searchUser });
+			} else {
+				this.setState({ users: this.state.duplicateData });
+			}
+		};
+		const selectTransaction = (e) => {
+			console.log(e.target.value);
+			if (e.target.value === "") {
+				this.setState({ users: this.state.duplicateData });
+			} else {
+				let filterData = this.state.users.filter(
+					(f) => f.transactionsType === e.target.value
+				);
+				this.setState({ users: filterData });
+			}
+		};
 		const editTransactions = (id) => {
 			this.setState({ id, modalStatus: true });
 		};
@@ -89,54 +111,84 @@ class Tables extends React.Component {
 							<Card>
 								<CardHeader>
 									<CardTitle tag="h4">All Transactions</CardTitle>
+									<Row>
+										<Col>
+											<div>
+												<Input
+													placeholder="Search User"
+													type="search"
+													onInput={searchCoin}
+												/>
+											</div>
+										</Col>
+										<Col>
+											<div>
+												<Input
+													placeholder="Search User"
+													type="select"
+													onChange={selectTransaction}
+												>
+													<option selected={true} disabled={true}>
+														Type of Transaction
+													</option>
+													<option value={"WITHDRAWAL"}>Withdrawal</option>
+													<option value={"DEPOSIT"}>Deposit</option>
+													<option value=""> All </option>
+												</Input>
+											</div>
+										</Col>
+									</Row>
 								</CardHeader>
 								<CardBody>
-									<Table className="tablesorter" responsive>
-										<thead className="text-primary">
-											<tr>
-												<th>Name</th>
-												<th>Country</th>
-												<th>City</th>
-												<th>Salary</th>
-												<th className="text-center"> Modify </th>
-											</tr>
-										</thead>
-										<tbody>
-											{users.map((e) => {
-												return (
-													<tr key={e._id}>
-														<td>Jon Porter</td>
-														<td>{e.transactionsType}</td>
-														<td>{e.status}</td>
-														<td>{e.amount}btc</td>
-														<td className="text-center">
-															<Button
-																size="sm"
-																onClick={() => {
-																	editTransactions(e._id);
-																}}
-															>
-																Update
-															</Button>
-														</td>
-														<td>
-															<Button
-																size="sm"
-																onClick={() =>
-																	this.props.history.push(
-																		"/dashboard/admin/" + e._id
-																	)
-																}
-															>
-																{" "}
-																View{" "}
-															</Button>
-														</td>
-													</tr>
-												);
-											})}
-										</tbody>
-									</Table>
+									{users.length ? (
+										<Table className="tablesorter" responsive>
+											<thead className="text-primary">
+												<tr>
+													<th>Name</th>
+													<th>Type</th>
+													<th>City</th>
+													<th>Salary</th>
+													<th className="text-center"> Modify </th>
+												</tr>
+											</thead>
+											<tbody>
+												{users.map((e) => {
+													return (
+														<tr key={e._id}>
+															<td>{e.user.name}</td>
+															<td>{e.transactionsType}</td>
+															<td>{e.status}</td>
+															<td>{e.amount}</td>
+															<td className="text-center">
+																<Button
+																	size="sm"
+																	onClick={() => {
+																		editTransactions(e._id);
+																	}}
+																>
+																	Update
+																</Button>
+															</td>
+															<td>
+																<Button
+																	size="sm"
+																	onClick={() =>
+																		this.props.history.push(
+																			"/dashboard/admin/" + e.user._id
+																		)
+																	}
+																>
+																	View
+																</Button>
+															</td>
+														</tr>
+													);
+												})}
+											</tbody>
+										</Table>
+									) : (
+										<h2> No User with a transaction found </h2>
+									)}
 								</CardBody>
 							</Card>
 						</Col>

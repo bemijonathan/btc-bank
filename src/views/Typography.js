@@ -156,7 +156,7 @@ class Tables extends React.Component {
 														<tr key={e._id}>
 															<td>{e.username}</td>
 															<td>{e.email}</td>
-															<td>Gloucester</td>
+															<td>{e.country}</td>
 															<td className="text-center">
 																<Button
 																	color="success"
@@ -170,7 +170,17 @@ class Tables extends React.Component {
 																</Button>
 															</td>
 															<td>
-																<Button size="sm"> View </Button>
+																<Button
+																	size="sm"
+																	onClick={(e) => {
+																		this.props.history.push(
+																			"dashboard/admin/" + e._id
+																		);
+																	}}
+																>
+																	{" "}
+																	View{" "}
+																</Button>
 															</td>
 															<td>
 																<Button

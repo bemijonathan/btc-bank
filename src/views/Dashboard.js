@@ -34,8 +34,8 @@ class Dashboard extends React.Component {
 									<CardTitle tag="h3">
 										<i className="tim-icons icon-bell-55 text-info" />{" "}
 										{this.state.balance.confirmed
-											? "$" + this.state.balance.confirmed
-											: "$0.000"}
+											? "" + this.state.balance.confirmed
+											: "0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
 										<i className="tim-icons icon-coins text-primary" />{" "}
 										{this.state.balance.deposit
 											? this.state.balance.deposit
-											: "$0.000"}
+											: "0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
@@ -63,7 +63,7 @@ class Dashboard extends React.Component {
 										0
 											? this.state.balance.deposit -
 											  this.state.balance.confirmed
-											: "$0.000"}
+											: "0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
