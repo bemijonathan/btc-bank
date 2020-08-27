@@ -118,12 +118,6 @@ class Sidebar extends React.Component {
 								</li>
 							);
 						})}
-						<li className="active-pro">
-							<ReactstrapNavLink href="/home">
-								<i className="tim-icons icon-spaceship" />
-								<p>Upgrade to PRO</p>
-							</ReactstrapNavLink>
-						</li>
 					</Nav>
 				</div>
 			</div>

@@ -28,11 +28,15 @@ class Tables extends React.Component {
 		status: "",
 		disabled: false,
 		duplicateData: [],
+		disabledDelete: false,
 	};
 	getDAta() {
 		fetchclient("/transaction/all").then((users) => {
 			console.log(users);
-			this.setState({ users: users.data.data, duplicateData: users.data.data });
+			this.setState({
+				users: users.data.data,
+				duplicateData: users.data.data.reverse(),
+			});
 		});
 	}
 	componentDidMount() {
@@ -102,6 +106,17 @@ class Tables extends React.Component {
 			}
 			this.setState({ disabled: false });
 		};
+
+		const deleteTransactions = async (id) => {
+			this.setState({ disabledDelete: true });
+			try {
+				await fetchclient.delete("/transaction/" + id);
+				this.getDAta();
+				this.setState({ disabledDelete: false });
+			} catch (error) {
+				console.log(error.response);
+			}
+		};
 		return (
 			<>
 				<div className="content">
@@ -157,7 +172,17 @@ class Tables extends React.Component {
 														<tr key={e._id}>
 															<td>{e.user.name}</td>
 															<td>{e.transactionsType}</td>
-															<td>{e.status}</td>
+															<td>
+																<p
+																	className={
+																		e.status === "CONFIRMED"
+																			? "text-success"
+																			: "text-danger"
+																	}
+																>
+																	{e.status}
+																</p>
+															</td>
 															<td>{e.amount}</td>
 															<td className="text-center">
 																<Button
@@ -167,6 +192,14 @@ class Tables extends React.Component {
 																	}}
 																>
 																	Update
+																</Button>
+																<Button
+																	size="sm"
+																	onClick={() => deleteTransactions(e._id)}
+																	color="danger"
+																	disabled={this.state.disabledDelete}
+																>
+																	Delete
 																</Button>
 															</td>
 															<td>

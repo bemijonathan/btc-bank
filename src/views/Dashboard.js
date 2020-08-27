@@ -14,6 +14,8 @@ class Dashboard extends React.Component {
 	}
 	componentDidMount() {
 		fetchclient("/user").then((data) => {
+			console.log(data);
+
 			this.setState({ balance: data.data.data.balance });
 		});
 	}
@@ -27,42 +29,58 @@ class Dashboard extends React.Component {
 			<>
 				<div className="content">
 					<Row>
-						<Col lg="4">
+						<Col lg="3">
 							<Card className="card-chart">
 								<CardHeader>
 									<h5 className="card-category">Total Balance</h5>
 									<CardTitle tag="h3">
 										<i className="tim-icons icon-bell-55 text-info" />{" "}
-										{this.state.balance.confirmed
-											? "" + this.state.balance.confirmed
+										{this.state.balance.confirmed + this.state.balance.bonus
+											? (
+													this.state.balance.confirmed +
+													this.state.balance.bonus
+											  )
+													.toString()
+													.slice(0, 7)
 											: "0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
 						</Col>
-						<Col lg="4">
+						<Col lg="3">
 							<Card className="card-chart">
 								<CardHeader>
 									<h5 className="card-category">Invested Amount</h5>
 									<CardTitle tag="h3">
 										<i className="tim-icons icon-coins text-primary" />{" "}
 										{this.state.balance.deposit
-											? this.state.balance.deposit
+											? this.state.balance.deposit.toString().slice(0, 7)
 											: "0.000"}
 									</CardTitle>
 								</CardHeader>
 							</Card>
 						</Col>
-						<Col lg="4">
+						<Col lg="3">
 							<Card className="card-chart">
 								<CardHeader>
-									<h5 className="card-category">Total Earnings</h5>
+									<h5 className="card-category">Confirmed Total Withdrawal</h5>
 									<CardTitle tag="h3">
 										<i className="tim-icons icon-bank text-success" />
-										{this.state.balance.deposit - this.state.balance.confirmed >
-										0
-											? this.state.balance.deposit -
-											  this.state.balance.confirmed
+										{this.state.balance.withdraw > 0
+											? this.state.balance.withdraw
+											: "0.000"}
+									</CardTitle>
+								</CardHeader>
+							</Card>
+						</Col>
+						<Col lg="3">
+							<Card className="card-chart">
+								<CardHeader>
+									<h5 className="card-category">Bonus Earnings</h5>
+									<CardTitle tag="h3">
+										<i className="tim-icons icon-bank text-success" />
+										{this.state.balance.withdraw
+											? this.state.balance.bonus
 											: "0.000"}
 									</CardTitle>
 								</CardHeader>

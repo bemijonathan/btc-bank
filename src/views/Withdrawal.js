@@ -64,7 +64,8 @@ class Notifications extends React.Component {
 		});
 	}
 	state = {
-		amount: "",
+		amount: 0,
+		bonus: 0,
 		wallet: "",
 		balance: undefined,
 	};
@@ -78,7 +79,7 @@ class Notifications extends React.Component {
 					amount,
 				};
 				const response = await fetchclient.post("transaction", {
-					data,
+					...data,
 				});
 				console.log(response);
 				this.notify("success");
@@ -102,9 +103,10 @@ class Notifications extends React.Component {
 								</CardHeader>
 								<CardBody>
 									<h1>
-										{" "}
-										Balance:{" "}
-										{this.state.balance ? this.state.balance + "btc" : "$0.000"}
+										Balance:
+										{this.state.balance
+											? this.state.balance + this.state.bonus + "btc"
+											: "$0.000"}
 									</h1>
 									<Form className="form" onSubmit={submit}>
 										<InputGroup

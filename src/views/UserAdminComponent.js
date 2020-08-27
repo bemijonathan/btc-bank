@@ -16,6 +16,7 @@ import {
 	Input,
 	Row,
 	Col,
+	Table,
 } from "reactstrap";
 import fetchclient from "utils/axios";
 import { connect } from "react-redux";
@@ -73,6 +74,10 @@ const UserProfile = (props) => {
 		}
 	};
 
+	// const filteResponse = (data) => {
+	// 	data.f
+	// }
+
 	useEffect(() => {
 		async function getUser(id) {
 			setLoading(true);
@@ -82,6 +87,7 @@ const UserProfile = (props) => {
 				const response = await fetchclient("/user/" + props.match.params.user);
 				userData(response.data.data);
 				console.log(response);
+				// filteResponse(response.data.data)
 			} catch (error) {
 				console.log(error.response);
 				setError(true);
@@ -118,7 +124,7 @@ const UserProfile = (props) => {
 								<CardTitle tag="h3">
 									<i className="tim-icons icon-bell-55 text-info" />{" "}
 									{user.confirmed + user.bonus
-										? user.confirmed + user.bonus
+										? (user.confirmed + user.bonus).toString().slice(0, 7)
 										: "0.000"}
 								</CardTitle>
 							</CardHeader>
@@ -130,7 +136,7 @@ const UserProfile = (props) => {
 								<h5 className="card-category">Invested Amount</h5>
 								<CardTitle tag="h3">
 									<i className="tim-icons icon-coins text-primary" />{" "}
-									{user.deposit ? user.deposit : "0.000"}
+									{user.deposit ? user.deposit.toString().slice(0, 7) : "0.000"}
 								</CardTitle>
 							</CardHeader>
 						</Card>
@@ -141,7 +147,9 @@ const UserProfile = (props) => {
 								<h5 className="card-category">Confirmed Total Withdraw</h5>
 								<CardTitle tag="h3">
 									<i className="tim-icons icon-bank text-success" />
-									{user.withdraw ? user.withdraw : "0.000"}
+									{user.withdraw
+										? user.withdraw.toString().slice(0, 7)
+										: "0.000"}
 								</CardTitle>
 							</CardHeader>
 						</Card>
@@ -152,7 +160,7 @@ const UserProfile = (props) => {
 								<h5 className="card-category">Bonus</h5>
 								<CardTitle tag="h3">
 									<i className="tim-icons icon-bank text-success" />
-									{user.bonus > 0 ? user.bonus : "0.000"}
+									{user.bonus > 0 ? user.bonus.toString().slice(0, 7) : "0.000"}
 								</CardTitle>
 							</CardHeader>
 						</Card>
@@ -308,6 +316,81 @@ const UserProfile = (props) => {
 							</Col>
 						</Row>
 					)}
+
+					<section>
+						<Row>
+							<Col>
+								<Card>
+									<CardBody className="text-white text-center">
+										All Deposit transactions by {user.name}
+									</CardBody>
+									<Table className="tablesorter">
+										<thead className="text-primary">
+											<tr>
+												<th>Date</th>
+												<th>Status</th>
+												<th>amount</th>
+											</tr>
+										</thead>
+										<tbody>
+											{user.transactions
+												? user?.transactions?.map((e, i) => {
+														return (
+															<tr key={i + "table"}>
+																{e.transactionsType === "DEPOSIT" ? (
+																	<>
+																		<td>{e.createdAt.slice(0, 10)}</td>
+																		<td>{e.status}</td>
+																		<td>{e.amount}</td>
+																	</>
+																) : (
+																	""
+																)}
+															</tr>
+														);
+												  })
+												: null}
+										</tbody>
+									</Table>
+								</Card>
+							</Col>
+							<Col>
+								<Card>
+									<CardBody className="text-white text-center">
+										All Withdraw transactions by {user.name}
+									</CardBody>
+									<Table className="tablesorter">
+										<thead className="text-primary">
+											<tr>
+												<th>Date</th>
+												<th>Status</th>
+												<th>amount</th>
+											</tr>
+										</thead>
+										<tbody>
+											{user.transactions
+												? user?.transactions?.map((e, i) => {
+														return (
+															<tr key={i + "table"}>
+																{e.transactionsType === "WITHDRAWAL" ? (
+																	<>
+																		<td>{e.createdAt.slice(0, 10)}</td>
+																		<td>{e.status}</td>
+																		<td>{e.amount}</td>
+																	</>
+																) : (
+																	""
+																)}
+															</tr>
+														);
+												  })
+												: null}
+										</tbody>
+									</Table>
+								</Card>
+							</Col>
+						</Row>
+					</section>
 				</div>
 			</div>
 		</>

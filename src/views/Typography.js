@@ -48,17 +48,40 @@ class Tables extends React.Component {
 		status: "",
 		amount: "",
 		disabled: false,
+		duplicateUSers: [],
 	};
 	componentDidMount() {
 		this.setState({ loading: true });
 		fetchclient("/user/all").then((users) => {
 			console.log(users);
-			this.setState({ users: users.data.data });
+			this.setState({
+				users: users.data.data.reverse(),
+				duplicateUSers: users.data.data.reverse(),
+			});
 			this.setState({ loading: false });
 		});
 	}
 	render() {
-		const { users, loading, modalStatus, id, amount, status } = this.state;
+		const {
+			users,
+			loading,
+			modalStatus,
+			id,
+			amount,
+			status,
+			duplicateUSers,
+		} = this.state;
+
+		const searchTerm = (e) => {
+			if (e.target.value !== "") {
+				let arr = users.filter((f) => f.username.includes(e.target.value));
+				this.setState({
+					users: arr,
+				});
+			} else {
+				this.setState({ users: duplicateUSers });
+			}
+		};
 		let options = {
 			place: "tc",
 			message: "",
@@ -134,6 +157,12 @@ class Tables extends React.Component {
 							<Card>
 								<CardHeader>
 									<CardTitle tag="h4">All Transactions</CardTitle>
+									<Input
+										type="search"
+										placeholder="Name of User "
+										style={{ maxWidth: "300px" }}
+										onInput={searchTerm}
+									/>
 								</CardHeader>
 								<CardBody>
 									{loading ? (
@@ -142,7 +171,7 @@ class Tables extends React.Component {
 										<Table className="tablesorter" responsive>
 											<thead className="text-primary">
 												<tr>
-													<th>Name</th>
+													<th>UserName</th>
 													<th>email</th>
 													<th>Country</th>
 													<th className="text-center">Add Coins</th>
@@ -172,13 +201,13 @@ class Tables extends React.Component {
 															<td>
 																<Button
 																	size="sm"
-																	onClick={(e) => {
+																	onClick={() => {
 																		this.props.history.push(
-																			"dashboard/admin/" + e._id
+																			"/dashboard/admin/" + e._id
 																		);
 																	}}
 																>
-																	{" "}
+																	{""}
 																	View{" "}
 																</Button>
 															</td>
