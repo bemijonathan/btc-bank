@@ -27,3 +27,9 @@ const isAuthenticated = () => {
 	}
 	return false;
 };
+
+export const showSpinner = (state = false, action) => {
+	if (action.payload) {
+		return true;
+	} else return false;
+};

@@ -38,6 +38,8 @@ import {
 import classnames from "classnames";
 import Notify from "react-notification-alert";
 import fetchclient from "utils/axios";
+import { connect } from "react-redux";
+import { Toggle } from "store/actions/auth";
 
 class Tables extends React.Component {
 	state = {
@@ -51,6 +53,7 @@ class Tables extends React.Component {
 		duplicateUSers: [],
 	};
 	componentDidMount() {
+		this.props.showSpinner(true);
 		this.setState({ loading: true });
 		fetchclient("/user/all").then((users) => {
 			console.log(users);
@@ -58,6 +61,7 @@ class Tables extends React.Component {
 				users: users.data.data.reverse(),
 				duplicateUSers: users.data.data.reverse(),
 			});
+			this.props.showSpinner(false);
 			this.setState({ loading: false });
 		});
 	}
@@ -95,6 +99,7 @@ class Tables extends React.Component {
 			});
 		};
 		const AddCoins = async (e) => {
+			this.props.showSpinner(true);
 			e.preventDefault();
 			this.setState({ disabled: true });
 			try {
@@ -118,11 +123,15 @@ class Tables extends React.Component {
 						: "failed to add coin",
 					type: "danger",
 				});
+			} finally {
+				this.props.showSpinner(false);
+				this.setState({ disabled: false });
 			}
-			this.setState({ disabled: false });
 		};
 		const deleteUser = async (id) => {
 			try {
+				this.props.showSpinner(true);
+
 				let confirm = window.confirm("do you wan to delete this user");
 				if (confirm) {
 					this.setState({ loading: true });
@@ -145,8 +154,10 @@ class Tables extends React.Component {
 					message: "failed to delete user",
 					type: "danger",
 				});
+			} finally {
+				this.props.showSpinner(true);
+				this.setState({ loading: false });
 			}
-			this.setState({ loading: false });
 		};
 		return (
 			<>
@@ -311,5 +322,10 @@ class Tables extends React.Component {
 		);
 	}
 }
+const mapDispatchToProps = (dispatch) => ({
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
+	},
+});
 
-export default Tables;
+export default connect(null, mapDispatchToProps)(Tables);

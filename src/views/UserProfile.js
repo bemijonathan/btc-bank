@@ -19,6 +19,7 @@ import {
 import fetchclient from "utils/axios";
 import { connect } from "react-redux";
 import { Logout } from "store/actions/auth";
+import { Toggle } from "store/actions/auth";
 
 const UserProfile = (props) => {
 	const [user, userData] = useState({
@@ -33,6 +34,7 @@ const UserProfile = (props) => {
 	const [disabled, setDisabled] = useState(false);
 
 	const submit = async () => {
+		props.showSpinner(true);
 		setDisabled(true);
 		try {
 			const response = await fetchclient.patch("/user", {
@@ -49,6 +51,7 @@ const UserProfile = (props) => {
 		}
 
 		setDisabled(false);
+		props.showSpinner(false);
 	};
 
 	const deleteAccount = async () => {
@@ -56,6 +59,7 @@ const UserProfile = (props) => {
 			"are you sure you want to delete your account"
 		);
 		if (confirm) {
+			props.showSpinner(true);
 			try {
 				const response = await fetchclient.delete("/user");
 				console.log(response);
@@ -64,10 +68,12 @@ const UserProfile = (props) => {
 			} catch (error) {
 				console.log(error.response);
 			}
+			props.showSpinner(false);
 		}
 	};
 	async function getUser(id) {
 		setLoading(true);
+		props.showSpinner(true);
 		setError(false);
 		try {
 			setError(true);
@@ -78,6 +84,7 @@ const UserProfile = (props) => {
 			setError(true);
 		} finally {
 			setLoading(false);
+			props.showSpinner(false);
 		}
 	}
 
@@ -87,6 +94,7 @@ const UserProfile = (props) => {
 		const userid = jwt.decode(token);
 		getUser(userid.id);
 		// userid.id;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -256,6 +264,9 @@ const UserProfile = (props) => {
 const mapDispatchToProps = (dispatch) => ({
 	Logout() {
 		dispatch(Logout());
+	},
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
 	},
 });
 

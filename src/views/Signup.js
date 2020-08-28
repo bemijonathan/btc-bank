@@ -3,7 +3,7 @@ import NavBar from "components/Navbars/RTLNavbar";
 import fetchclient from "../utils/axios";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
-import { Login } from "../store/actions/auth";
+import { Login, Toggle } from "../store/actions/auth";
 import { connect } from "react-redux";
 // reactstrap components
 import {
@@ -51,6 +51,7 @@ class Signup extends React.Component {
 		};
 
 		const Submit = async (e) => {
+			this.props.showSpinner(false);
 			this.setState({ loading: true });
 			e.preventDefault();
 			const {
@@ -80,6 +81,7 @@ class Signup extends React.Component {
 				});
 				this.props.Login();
 				this.props.history.push("/dashboard/user");
+				this.props.showSpinner(false);
 			} catch (error) {
 				console.log(error.response);
 				this.refs.notify.notificationAlert({
@@ -87,8 +89,10 @@ class Signup extends React.Component {
 					message: error.response.data.error,
 					type: "danger",
 				});
+				this.props.showSpinner(false);
+			} finally {
+				this.setState({ loading: false });
 			}
-			this.setState({ loading: false });
 		};
 		const validate = () => {
 			const { email } = this.state;
@@ -323,6 +327,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	Login() {
 		dispatch(Login());
+	},
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
 	},
 });
 

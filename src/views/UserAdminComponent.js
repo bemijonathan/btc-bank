@@ -21,6 +21,7 @@ import {
 import fetchclient from "utils/axios";
 import { connect } from "react-redux";
 import { Logout } from "store/actions/auth";
+import { Toggle } from "store/actions/auth";
 
 const UserProfile = (props) => {
 	const [user, userData] = useState({
@@ -37,6 +38,7 @@ const UserProfile = (props) => {
 	const submit = async () => {
 		setDisabled(true);
 		try {
+			props.showSpinner(true);
 			const response = await fetchclient.patch(
 				"/user/" + props.match.params.user,
 				{
@@ -51,6 +53,8 @@ const UserProfile = (props) => {
 			// props.history.push("/dashboard/user");
 		} catch (error) {
 			console.log(error.response);
+		} finally {
+			props.showSpinner(false);
 		}
 
 		setDisabled(false);
@@ -62,6 +66,7 @@ const UserProfile = (props) => {
 		);
 		if (confirm) {
 			try {
+				props.showSpinner(true);
 				const response = await fetchclient.delete(
 					"/user/" + props.match.params.user
 				);
@@ -70,6 +75,7 @@ const UserProfile = (props) => {
 				props.history.push("/home");
 			} catch (error) {
 				console.log(error.response);
+				props.showSpinner(false);
 			}
 		}
 	};
@@ -79,9 +85,11 @@ const UserProfile = (props) => {
 	// }
 
 	useEffect(() => {
+		props.showSpinner(true);
 		async function getUser(id) {
 			setLoading(true);
 			setError(false);
+
 			try {
 				setError(true);
 				const response = await fetchclient("/user/" + props.match.params.user);
@@ -94,13 +102,15 @@ const UserProfile = (props) => {
 			} finally {
 				setLoading(false);
 			}
+			props.showSpinner(false);
 		}
 		const token = localStorage.getItem("auth-token");
 		console.log(token);
 		const userid = jwt.decode(token);
 		getUser(userid.id);
 		// userid.id;
-	}, [props.match]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		let y =
@@ -400,6 +410,9 @@ const UserProfile = (props) => {
 const mapDispatchToProps = (dispatch) => ({
 	Logout() {
 		dispatch(Logout());
+	},
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
 	},
 });
 

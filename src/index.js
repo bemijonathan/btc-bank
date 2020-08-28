@@ -18,6 +18,7 @@ import "assets/css/custom.css";
 import Store from "./store";
 import { Provider } from "react-redux";
 import { useSelector } from "react-redux";
+import Spinner from "./components/spinner";
 
 const hist = createBrowserHistory();
 
@@ -30,9 +31,12 @@ const DashboardRoute = (props) => {
 	return select ? <AdminLayout {...props} /> : <Redirect to="/signin" />;
 };
 
-ReactDOM.render(
-	<main>
-		<Provider store={Store}>
+const Main = () => {
+	const showSpinner = useSelector((state) => {
+		return state.showSpinner;
+	});
+	return (
+		<main>
 			<Router history={hist}>
 				<Switch>
 					<Route path="/" exact component={Comingsoon} />
@@ -48,10 +52,17 @@ ReactDOM.render(
 					<Route path="*" exact={true} component={PageNotFound} />
 				</Switch>
 			</Router>
-		</Provider>
-		<div>
-			<Footer />
-		</div>
-	</main>,
+			<div>{showSpinner ? <Spinner /> : ""}</div>
+			<div>
+				<Footer />
+			</div>
+		</main>
+	);
+};
+
+ReactDOM.render(
+	<Provider store={Store}>
+		<Main />{" "}
+	</Provider>,
 	document.getElementById("root")
 );

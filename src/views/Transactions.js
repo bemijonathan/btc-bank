@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import {
 	Col,
 	Row,
@@ -8,14 +9,16 @@ import {
 	CardHeader,
 	Table,
 } from "reactstrap";
+import { Toggle } from "store/actions/auth";
 import fetchclient from "utils/axios";
 
-export default function Transactions() {
+function Transactions(props) {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [data, setData] = useState([]);
 
 	const getData = async () => {
+		props.showSpinner(true);
 		setLoading(true);
 		setError(false);
 		console.log("getting Data");
@@ -28,11 +31,13 @@ export default function Transactions() {
 			console.log(error.response);
 		} finally {
 			setLoading(false);
+			props.showSpinner(false);
 		}
 	};
 
 	useEffect(() => {
 		getData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const TableLoop = () => {
@@ -97,3 +102,11 @@ export default function Transactions() {
 // 		data,
 // 	},
 // ];
+
+const mapDispatchToProps = (dispatch) => ({
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
+	},
+});
+
+export default connect(null, mapDispatchToProps)(Transactions);

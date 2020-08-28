@@ -3,6 +3,8 @@ import "assets/css/custom.css";
 // reactstrap components
 import { Card, CardHeader, CardTitle, Row, Col } from "reactstrap";
 import fetchclient from "utils/axios";
+import { connect } from "react-redux";
+import { Toggle } from "store/actions/auth";
 
 class Dashboard extends React.Component {
 	constructor(props) {
@@ -13,10 +15,12 @@ class Dashboard extends React.Component {
 		};
 	}
 	componentDidMount() {
+		this.props.showSpinner(true);
 		fetchclient("/user").then((data) => {
 			console.log(data);
 
 			this.setState({ balance: data.data.data.balance });
+			this.props.showSpinner(false);
 		});
 	}
 	setBgChartData = (name) => {
@@ -110,4 +114,10 @@ class Dashboard extends React.Component {
 	}
 }
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => ({
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
+	},
+});
+
+export default connect(null, mapDispatchToProps)(Dashboard);

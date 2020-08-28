@@ -19,6 +19,8 @@ import {
 } from "reactstrap";
 import fetchclient from "utils/axios";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { Toggle } from "store/actions/auth";
 
 class Tables extends React.Component {
 	state = {
@@ -31,12 +33,14 @@ class Tables extends React.Component {
 		disabledDelete: false,
 	};
 	getDAta() {
+		this.props.showSpinner(true);
 		fetchclient("/transaction/all").then((users) => {
 			console.log(users);
 			this.setState({
 				users: users.data.data,
 				duplicateData: users.data.data.reverse(),
 			});
+			this.props.showSpinner(false);
 		});
 	}
 	componentDidMount() {
@@ -83,6 +87,7 @@ class Tables extends React.Component {
 		const AddCoins = async (e) => {
 			e.preventDefault();
 			this.setState({ disabled: true });
+			this.props.showSpinner(true);
 			try {
 				const x = await fetchclient.patch("transaction/" + id, {
 					status,
@@ -103,11 +108,15 @@ class Tables extends React.Component {
 						: "failed to add coin",
 					type: "danger",
 				});
+			} finally {
+				this.props.showSpinner(false);
+				this.setState({ disabled: false });
 			}
-			this.setState({ disabled: false });
 		};
 
 		const deleteTransactions = async (id) => {
+			this.props.showSpinner(true);
+
 			this.setState({ disabledDelete: true });
 			try {
 				await fetchclient.delete("/transaction/" + id);
@@ -115,6 +124,8 @@ class Tables extends React.Component {
 				this.setState({ disabledDelete: false });
 			} catch (error) {
 				console.log(error.response);
+			} finally {
+				this.props.showSpinner(false);
 			}
 		};
 		return (
@@ -281,4 +292,10 @@ class Tables extends React.Component {
 	}
 }
 
-export default Tables;
+const mapDispatchToProps = (dispatch) => ({
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
+	},
+});
+
+export default connect(null, mapDispatchToProps)(Tables);

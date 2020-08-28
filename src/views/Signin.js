@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "components/Navbars/RTLNavbar";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import { Login } from "../store/actions/auth";
+import { Login, Toggle } from "../store/actions/auth";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -41,6 +41,7 @@ class Signup extends React.Component {
 
 		const Submit = async (e) => {
 			e.preventDefault();
+			this.props.showSpinner(true);
 			this.setState({ disabled: true });
 			const { email, password } = this.state;
 			const data = {
@@ -59,8 +60,10 @@ class Signup extends React.Component {
 				localStorage.setItem("auth-token", response.data.data);
 				console.log(response);
 				this.props.Login();
+				this.props.showSpinner(false);
 				this.props.history.push("/dashboard/user");
 			} catch (error) {
+				this.props.showSpinner(false);
 				console.log(error.response);
 				this.refs.notify.notificationAlert({
 					...options,
@@ -68,6 +71,7 @@ class Signup extends React.Component {
 					type: "danger",
 				});
 			}
+
 			this.setState({ disabled: false });
 		};
 		return (
@@ -179,6 +183,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	Login() {
 		dispatch(Login());
+	},
+	showSpinner(payload) {
+		dispatch(Toggle(payload));
 	},
 });
 
